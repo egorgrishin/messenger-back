@@ -8,7 +8,5 @@ abstract class Pivot extends Model
 {
     use AsPivot;
 
-    public $incrementing = false;
-
     protected $guarded = [];
 }

@@ -8,15 +8,15 @@ use Modules\Message\Requests\CreateMessageRequest;
 
 final readonly class CreateMessageDto extends Dto
 {
-    public int $fromId;
-    public int $toId;
+    public int $chatId;
+    public int $userId;
     public string $text;
 
     public static function fromRequest(CreateMessageRequest $request): self
     {
         $dto = new self();
-        $dto->fromId = $request->user()->getAuthIdentifier();
-        $dto->toId = $request->input('toId');
+        $dto->chatId = $request->input('chatId');
+        $dto->userId = $request->user()->getAuthIdentifier();
         $dto->text = $request->input('text');
         return $dto;
     }

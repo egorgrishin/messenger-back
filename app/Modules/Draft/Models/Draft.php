@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property int $from_id
- * @property int $to_id
+ * @property int $chat_id
+ * @property int $user_id
  * @property string|null $text
  * @property DateTimeInterface $updated_at
  */

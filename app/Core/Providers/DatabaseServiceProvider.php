@@ -5,8 +5,6 @@ namespace Core\Providers;
 use Illuminate\Support\ServiceProvider;
 use Modules\Message\Models\Message;
 use Modules\Message\Observers\MessageObserver;
-use Modules\User\Models\Friendship;
-use Modules\User\Observers\FriendshipObserver;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -34,7 +32,6 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     private function registerObservers(): void
     {
-        Friendship::observe(FriendshipObserver::class);
         Message::observe(MessageObserver::class);
     }
 }

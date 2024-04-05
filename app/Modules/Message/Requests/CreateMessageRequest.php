@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Modules\Message\Requests;
 
 use Core\Parents\Request;
+use Modules\Chat\Models\Chat;
 use Modules\Message\Dto\CreateMessageDto;
-use Modules\User\Models\User;
 
 final class CreateMessageRequest extends Request
 {
@@ -16,10 +16,10 @@ final class CreateMessageRequest extends Request
 
     public function rules(): array
     {
-        $userClass = User::class;
+        $chatClass = Chat::class;
         return [
-            'toId' => "required|integer|exists:$userClass,id",
-            'text' => 'required|string',
+            'chatId' => "required|integer|exists:$chatClass,id",
+            'text'   => 'required|string',
         ];
     }
 

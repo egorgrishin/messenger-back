@@ -37,7 +37,7 @@ final class UpdateMessageAction extends Action
         if (!$message) {
             throw new HttpException(404);
         }
-        if ($message->from_id != $dto->fromId) {
+        if ($message->user_id != $dto->userId) {
             throw new HttpException(403);
         }
         if ($message->text == $dto->text) {

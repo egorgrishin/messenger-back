@@ -26,8 +26,9 @@ class Jwt
     {
         $this->header->setDecodedHeader(['algo' => 'sha256', 'type' => 'JWT']);
         $this->payload->setDecodedPayload([
-            'id'  => $user->getAuthIdentifier(),
-            'exp' => time() + env('ACCESS_TOKEN_LIFETIME', 900),
+            'id'   => $user->getAuthIdentifier(),
+            'nick' => $user->nick,
+            'exp'  => time() + env('ACCESS_TOKEN_LIFETIME', 900),
         ]);
 
         $key = $this->getKey();

@@ -10,7 +10,7 @@ final class LoginRequest extends Request
 {
     public function authorize(): bool
     {
-        return !$this->user();
+        return true;
     }
 
     public function rules(): array

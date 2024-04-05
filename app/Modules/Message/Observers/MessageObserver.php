@@ -11,6 +11,6 @@ final class MessageObserver extends Observer
 {
     public function created(Message $message): void
     {
-        $this->task(ClearDraftTask::class)->run($message->from_id, $message->to_id);
+        $this->task(ClearDraftTask::class)->run($message->chat_id, $message->user_id);
     }
 }

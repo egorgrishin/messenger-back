@@ -9,13 +9,13 @@ use Modules\Draft\Models\Draft;
 final class ClearDraftTask extends Task
 {
     /**
-     * Очищает черновик после отпрравки сообщения
+     * Очищает черновик после отправки сообщения
      */
-    public function run(int $fromId, int $toId): void
+    public function run(int $chatId, int $userId): void
     {
         Draft::query()
-            ->where('from_id', $fromId)
-            ->where('to_id', $toId)
+            ->where('chat_id', $chatId)
+            ->where('user_id', $userId)
             ->update([
                 'text' => null,
             ]);

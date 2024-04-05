@@ -8,15 +8,15 @@ use Core\Parents\Dto;
 
 final readonly class CreateOrUpdateDraftDto extends Dto
 {
-    public int $fromId;
-    public int $toId;
+    public int $chatId;
+    public int $userId;
     public ?string $text;
 
     public static function fromRequest(CreateOrUpdateDraftRequest $request): self
     {
         $dto = new self();
-        $dto->fromId = $request->input('fromId');
-        $dto->toId = $request->input('toId');
+        $dto->chatId = $request->input('chatId');
+        $dto->userId = $request->input('userId');
         $dto->text = $request->input('text');
         return $dto;
     }

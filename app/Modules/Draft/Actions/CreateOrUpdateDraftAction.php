@@ -33,8 +33,8 @@ final class CreateOrUpdateDraftAction extends Action
     {
         /** @var Draft|null */
         return Draft::query()
-            ->where('from_id', $dto->fromId)
-            ->where('to_id', $dto->toId)
+            ->where('chat_id', $dto->chatId)
+            ->where('user_id', $dto->userId)
             ->first();
     }
 
@@ -45,8 +45,8 @@ final class CreateOrUpdateDraftAction extends Action
     {
         try {
             $draft = new Draft();
-            $draft->from_id = $dto->fromId;
-            $draft->to_id = $dto->toId;
+            $draft->chat_id = $dto->chatId;
+            $draft->user_id = $dto->userId;
             $draft->text = $dto->text;
             $draft->saveOrFail();
         } catch (Throwable) {

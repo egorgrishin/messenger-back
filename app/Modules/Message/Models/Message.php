@@ -10,8 +10,8 @@ use Modules\Message\Data\Factories\MessageFactory;
 
 /**
  * @property int $id
- * @property int $from_id
- * @property int $to_id
+ * @property int $chat_id
+ * @property int $user_id
  * @property string $text
  * @property DateTimeInterface $created_at
  */

@@ -16,8 +16,8 @@ final class CreateMessageAction extends Action
     {
         try {
             $message = new Message();
-            $message->from_id = $dto->fromId;
-            $message->to_id = $dto->toId;
+            $message->chat_id = $dto->chatId;
+            $message->user_id = $dto->userId;
             $message->text = $dto->text;
             $message->saveOrFail();
         } catch (Throwable $exception) {
