@@ -8,7 +8,7 @@ use Modules\Chat\Dto\GetUserChatsDto;
 
 final class GetUserChatsRequest extends Request
 {
-    public function authorization(): bool
+    public function authorize(): bool
     {
         return $this->user()?->getAuthIdentifier() == $this->route('userId');
     }
