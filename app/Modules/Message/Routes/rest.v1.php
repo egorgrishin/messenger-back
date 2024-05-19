@@ -5,5 +5,4 @@ use Illuminate\Support\Facades\Route;
 use Modules\Message\Controllers\MessageController;
 
 Route::post('/messages', [MessageController::class, 'create']);
-Route::patch('/messages/{messageId}', [MessageController::class, 'update']);
 Route::get('/chats/{chatId}/messages', [MessageController::class, 'getChatMessages']);

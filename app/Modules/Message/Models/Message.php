@@ -6,6 +6,8 @@ namespace Modules\Message\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Chat\Models\Chat;
 use Modules\Message\Data\Factories\MessageFactory;
 
 /**
@@ -14,6 +16,7 @@ use Modules\Message\Data\Factories\MessageFactory;
  * @property int $user_id
  * @property string $text
  * @property DateTimeInterface $created_at
+ * @property Chat $chat
  */
 final class Message extends Model
 {
@@ -24,5 +27,10 @@ final class Message extends Model
     protected static function newFactory(): MessageFactory
     {
         return MessageFactory::new();
+    }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
     }
 }

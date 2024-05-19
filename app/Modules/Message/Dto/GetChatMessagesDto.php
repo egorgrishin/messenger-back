@@ -9,15 +9,17 @@ use Modules\Message\Requests\GetChatMessagesRequest;
 final readonly class GetChatMessagesDto extends Dto
 {
     public int $chatId;
-    public ?int $startMessageId;
+    public int $userId;
+    public ?int $startId;
 
     public static function fromRequest(GetChatMessagesRequest $request): self
     {
-        $startMessageId = $request->input('startMessageId');
+        $startId = $request->input('startId');
 
         $dto = new self();
         $dto->chatId = (int) $request->route('chatId');
-        $dto->startMessageId = $startMessageId ? (int) $startMessageId : null;
+        $dto->userId = $request->user()->getAuthIdentifier();
+        $dto->startId = $startId ? (int) $startId : null;
         return $dto;
     }
 }

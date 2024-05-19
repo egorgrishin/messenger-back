@@ -3,63 +3,64 @@ declare(strict_types=1);
 
 namespace Modules\Message\Tests;
 
+use Core\Parents\Model;
 use Core\Parents\Test;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Modules\Draft\Models\Draft;
+use Modules\Chat\Events\ChatUpdated;
+use Modules\Chat\Models\Chat;
+use Modules\Message\Events\NewMessage;
 use Modules\Message\Models\Message;
 use Modules\User\Models\User;
 
 final class CreateMessageTest extends Test
 {
-    public function testCreateMessageWithoutDraft(): void
+    public function testCreateMessage(): void
     {
-        /** @var User $user1 */
+        $this->fakeEventWithModel();
+
+        /** @var User $user */
         /** @var User $user2 */
-        [$user1, $user2] = [User::factory()->create(), User::factory()->create()];
+        [$user, $user2] = [User::factory()->create(), User::factory()->create()];
+        $token = $this->jwt->createToken($user);
+        /** @var Chat $chat */
+        $chat = Chat::factory()->create();
 
-        $this->assertMessageCreated($user1, $user2);
-    }
-
-    public function testCreateMessageWithDraft(): void
-    {
-        /** @var User $user1 */
-        /** @var User $user2 */
-        [$user1, $user2] = [User::factory()->create(), User::factory()->create()];
-
-        Draft::factory()->create($draft_data = [
-            'from_id' => $user1->id,
-            'to_id'   => $user2->id,
-        ]);
+        // Создаем сообщение в чате от пользователя, не состоящего в нем
         $this
-            ->assertDatabaseMissing(Draft::class, array_merge(
-                $draft_data, ['text' => null]
-            ))
-            ->assertDatabaseHas(Draft::class, $draft_data)
-            ->assertDatabaseCount(Draft::class, 1);
+            ->postJson("/api/v1/messages", [
+                'chatId' => $chat->id,
+                'text'   => $text = Str::random(),
+            ], [
+                'Authorization' => "Bearer $token",
+            ])
+            ->assertForbidden();
 
-        $this->assertMessageCreated($user1, $user2);
+        $this->assertDatabaseCount(Message::class, 0);
+        $chat->users()->attach([$user->id, $user2->id]);
 
-        $this->assertDatabaseHas(Draft::class, array_merge(
-            $draft_data, ['text' => null]
-        ))->assertDatabaseCount(Draft::class, 1);
-    }
-
-    private function assertMessageCreated(User $user1, User $user2): void
-    {
-        $token = $this->jwt->createToken($user1);
+        // Создаем сообщение в чате от пользователя, не состоящего в нем
         $this
-            ->postJson('/api/v1/messages', [
-                'fromId' => $user1->id,
-                'toId'   => $user2->id,
+            ->postJson("/api/v1/messages", [
+                'chatId' => $chat->id,
                 'text'   => $text = Str::random(),
             ], [
                 'Authorization' => "Bearer $token",
             ])
             ->assertCreated();
-        $this->assertDatabaseHas(Message::class, [
-            'from_id' => $user1->id,
-            'to_id'   => $user2->id,
-            'text'    => $text,
-        ])->assertDatabaseCount(Message::class, 1);
+
+        Event::assertDispatched(NewMessage::class);
+        Event::assertDispatchedTimes(ChatUpdated::class, 2);
+        $this
+            ->assertDatabaseHas(Message::class, [
+                'chat_id' => $chat->id,
+                'text'    => $text,
+                'user_id' => $user->id,
+            ])
+            ->assertDatabaseCount(Message::class, 1)
+            ->assertDatabaseHas(Chat::class, [
+                'id'              => $chat->id,
+                'last_message_id' => 1,
+            ]);
     }
 }

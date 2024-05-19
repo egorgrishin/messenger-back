@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Modules\Message\Requests;
 
 use Core\Parents\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Message\Dto\GetChatMessagesDto;
 
 final class GetChatMessagesRequest extends Request
@@ -16,7 +17,7 @@ final class GetChatMessagesRequest extends Request
     public function rules(): array
     {
         return [
-            'startMessageId' => 'nullable|integer',
+            'startId' => 'nullable|integer',
         ];
     }
 

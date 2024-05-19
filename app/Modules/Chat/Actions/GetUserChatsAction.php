@@ -16,7 +16,7 @@ final class GetUserChatsAction extends Action
     /**
      * Максимальное количество получаемых чатов
      */
-    private const LIMIT = 25;
+    private const LIMIT = 50;
 
     /**
      * Возвращает список чатов пользователя

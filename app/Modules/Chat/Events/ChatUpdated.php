@@ -7,12 +7,13 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Modules\Chat\Models\Chat;
 use Modules\Chat\Resources\ChatResource;
 
 class ChatUpdated implements ShouldBroadcast, ShouldDispatchAfterCommit
 {
-    use Dispatchable;
+    use Dispatchable, SerializesModels;
 
     public function __construct(
         private readonly Chat $chat,

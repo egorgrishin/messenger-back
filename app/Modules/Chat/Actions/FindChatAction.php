@@ -8,6 +8,7 @@ use Core\Parents\Action;
 use Illuminate\Support\Facades\DB;
 use Modules\Chat\Dto\FindChatDto;
 use Modules\Chat\Models\Chat;
+use Modules\Chat\Tasks\UserInChatTask;
 
 final class FindChatAction extends Action
 {
@@ -16,7 +17,7 @@ final class FindChatAction extends Action
      */
     public function run(FindChatDto $dto): array
     {
-        if (!$this->userInChat($dto)) {
+        if (!$this->task(UserInChatTask::class)->run($dto->chatId, $dto->userId)) {
             throw new HttpException(403, 'Вы не состоите в чате');
         }
 
