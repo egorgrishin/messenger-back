@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Models;
+namespace App\Modules\User\Models;
 
-use Core\Parents\Model;
+use App\Core\Parents\Model;
 use DateTimeInterface;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Modules\Chat\Models\Chat;
-use Modules\User\Data\Factories\UserFactory;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\User\Data\Factories\UserFactory;
 
 /**
  * @property int $id

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Chat\Rules;
+namespace App\Modules\Chat\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;

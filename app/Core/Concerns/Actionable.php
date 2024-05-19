@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Core\Concerns;
+namespace App\Core\Concerns;
 
-use Core\Parents\Action;
+use App\Core\Parents\Action;
 
 trait Actionable
 {

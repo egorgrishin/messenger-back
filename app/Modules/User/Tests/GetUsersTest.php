@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Tests;
+namespace App\Modules\User\Tests;
 
-use Core\Parents\Test;
-use Modules\User\Models\User;
+use App\Core\Parents\Test;
+use App\Modules\User\Models\User;
 
 final class GetUsersTest extends Test
 {

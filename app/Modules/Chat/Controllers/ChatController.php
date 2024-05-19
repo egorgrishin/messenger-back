@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Controllers;
+namespace App\Modules\Chat\Controllers;
 
-use Core\Parents\Controller;
+use App\Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Chat\Actions\CreateChatAction;
-use Modules\Chat\Actions\FindChatAction;
-use Modules\Chat\Actions\GetUserChatsAction;
-use Modules\Chat\Requests\CreateChatRequest;
-use Modules\Chat\Requests\FindChatRequest;
-use Modules\Chat\Requests\GetUserChatsRequest;
-use Modules\Chat\Resources\ChatResource;
+use App\Modules\Chat\Actions\CreateChatAction;
+use App\Modules\Chat\Actions\FindChatAction;
+use App\Modules\Chat\Actions\GetUserChatsAction;
+use App\Modules\Chat\Requests\CreateChatRequest;
+use App\Modules\Chat\Requests\FindChatRequest;
+use App\Modules\Chat\Requests\GetUserChatsRequest;
+use App\Modules\Chat\Resources\ChatResource;
 
 final class ChatController extends Controller
 {

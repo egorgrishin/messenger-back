@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Requests;
+namespace App\Modules\Auth\Requests;
 
-use Core\Parents\Request;
-use Modules\Auth\Dto\LoginDto;
+use App\Core\Parents\Request;
+use App\Modules\Auth\Dto\LoginDto;
 
 final class LoginRequest extends Request
 {

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Controllers;
+namespace App\Modules\Message\Controllers;
 
-use Core\Parents\Controller;
+use App\Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Message\Actions\CreateMessageAction;
-use Modules\Message\Actions\GetChatMessagesAction;
-use Modules\Message\Requests\CreateMessageRequest;
-use Modules\Message\Requests\GetChatMessagesRequest;
-use Modules\Message\Resources\MessageResource;
+use App\Modules\Message\Actions\CreateMessageAction;
+use App\Modules\Message\Actions\GetChatMessagesAction;
+use App\Modules\Message\Requests\CreateMessageRequest;
+use App\Modules\Message\Requests\GetChatMessagesRequest;
+use App\Modules\Message\Resources\MessageResource;
 
 final class MessageController extends Controller
 {

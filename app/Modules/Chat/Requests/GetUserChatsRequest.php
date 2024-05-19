@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Requests;
+namespace App\Modules\Chat\Requests;
 
-use Core\Parents\Request;
+use App\Core\Parents\Request;
 use Illuminate\Support\Facades\Log;
-use Modules\Chat\Dto\GetUserChatsDto;
+use App\Modules\Chat\Dto\GetUserChatsDto;
 
 final class GetUserChatsRequest extends Request
 {

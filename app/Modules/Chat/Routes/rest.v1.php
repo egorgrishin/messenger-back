@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Modules\Chat\Controllers\ChatController;
+use App\Modules\Chat\Controllers\ChatController;
 
 Route::post('/chats', [ChatController::class, 'create']);
 Route::get('/chats/{chatId}', [ChatController::class, 'find']);

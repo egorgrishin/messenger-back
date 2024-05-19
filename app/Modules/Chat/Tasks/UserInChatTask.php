@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Tasks;
+namespace App\Modules\Chat\Tasks;
 
-use Core\Parents\Task;
+use App\Core\Parents\Task;
 use Illuminate\Support\Facades\DB;
 
 final class UserInChatTask extends Task

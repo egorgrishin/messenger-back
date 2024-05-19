@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Requests;
+namespace App\Modules\Chat\Requests;
 
-use Core\Parents\Request;
+use App\Core\Parents\Request;
 use Illuminate\Validation\Rule;
-use Modules\Chat\Dto\CreateChatDto;
-use Modules\Chat\Rules\ValueInArray;
+use App\Modules\Chat\Dto\CreateChatDto;
+use App\Modules\Chat\Rules\ValueInArray;
 
 final class CreateChatRequest extends Request
 {

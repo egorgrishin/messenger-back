@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Dto;
+namespace App\Modules\Auth\Dto;
 
-use Core\Parents\Dto;
+use App\Core\Parents\Dto;
 
 final readonly class CreateRefreshTokenDto extends Dto
 {

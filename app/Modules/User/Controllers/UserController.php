@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Controllers;
+namespace App\Modules\User\Controllers;
 
-use Core\Parents\Controller;
+use App\Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\User\Actions\CreateUserAction;
-use Modules\User\Actions\GetUsersAction;
-use Modules\User\Requests\CreateUserRequest;
-use Modules\User\Requests\GetUsersRequest;
-use Modules\User\Resources\UserResource;
+use App\Modules\User\Actions\CreateUserAction;
+use App\Modules\User\Actions\GetUsersAction;
+use App\Modules\User\Requests\CreateUserRequest;
+use App\Modules\User\Requests\GetUsersRequest;
+use App\Modules\User\Resources\UserResource;
 
 final class UserController extends Controller
 {

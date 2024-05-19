@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Providers;
+namespace App\Core\Providers;
 
-use Core\Classes\Auth\JwtGuard;
+use App\Core\Classes\Auth\JwtGuard;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

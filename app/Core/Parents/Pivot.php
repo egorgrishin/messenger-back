@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
 use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Resources;
+namespace App\Modules\User\Resources;
 
-use Core\Parents\JsonResource;
+use App\Core\Parents\JsonResource;
 use Illuminate\Http\Request;
 
 class UserResource extends JsonResource

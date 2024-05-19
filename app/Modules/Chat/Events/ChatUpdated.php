@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Events;
+namespace App\Modules\Chat\Events;
 
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Modules\Chat\Models\Chat;
-use Modules\Chat\Resources\ChatResource;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Chat\Resources\ChatResource;
 
 class ChatUpdated implements ShouldBroadcast, ShouldDispatchAfterCommit
 {

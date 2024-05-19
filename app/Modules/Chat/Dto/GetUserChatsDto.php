@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Dto;
+namespace App\Modules\Chat\Dto;
 
-use Core\Parents\Dto;
-use Modules\Chat\Requests\GetUserChatsRequest;
+use App\Core\Parents\Dto;
+use App\Modules\Chat\Requests\GetUserChatsRequest;
 
 final readonly class GetUserChatsDto extends Dto
 {

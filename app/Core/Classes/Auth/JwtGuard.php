@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Classes\Auth;
+namespace App\Core\Classes\Auth;
 
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;

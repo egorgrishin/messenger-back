@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Actions;
+namespace App\Modules\User\Actions;
 
-use Core\Parents\Action;
+use App\Core\Parents\Action;
 use Illuminate\Database\Eloquent\Builder;
-use Modules\User\Dto\GetUsersDto;
-use Modules\User\Models\User;
+use App\Modules\User\Dto\GetUsersDto;
+use App\Modules\User\Models\User;
 
 final class GetUsersAction extends Action
 {

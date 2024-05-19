@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Models;
+namespace App\Modules\Message\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Chat\Models\Chat;
-use Modules\Message\Data\Factories\MessageFactory;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Message\Data\Factories\MessageFactory;
 
 /**
  * @property int $id

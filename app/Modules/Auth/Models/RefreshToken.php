@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Models;
+namespace App\Modules\Auth\Models;
 
-use Core\Parents\Model;
+use App\Core\Parents\Model;
 use DateTimeInterface;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;

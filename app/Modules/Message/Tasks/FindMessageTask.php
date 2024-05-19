@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Tasks;
+namespace App\Modules\Message\Tasks;
 
-use Core\Parents\Task;
-use Modules\Message\Models\Message;
+use App\Core\Parents\Task;
+use App\Modules\Message\Models\Message;
 
 final class FindMessageTask extends Task
 {

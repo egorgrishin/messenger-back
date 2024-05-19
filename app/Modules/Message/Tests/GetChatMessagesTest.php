@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Tests;
+namespace App\Modules\Message\Tests;
 
-use Core\Parents\Test;
-use Modules\Chat\Models\Chat;
-use Modules\Message\Models\Message;
-use Modules\User\Models\User;
+use App\Core\Parents\Test;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Message\Models\Message;
+use App\Modules\User\Models\User;
 
 final class GetChatMessagesTest extends Test
 {

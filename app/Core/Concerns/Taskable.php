@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Core\Concerns;
+namespace App\Core\Concerns;
 
-use Core\Parents\Task;
+use App\Core\Parents\Task;
 
 trait Taskable
 {

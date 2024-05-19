@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Actions;
+namespace App\Modules\Message\Actions;
 
-use Core\Exceptions\HttpException;
-use Core\Parents\Action;
+use App\Core\Exceptions\HttpException;
+use App\Core\Parents\Action;
 use Illuminate\Support\Facades\Log;
-use Modules\Chat\Events\ChatUpdated;
-use Modules\Chat\Models\Chat;
-use Modules\Chat\Tasks\UserInChatTask;
-use Modules\Message\Dto\CreateMessageDto;
-use Modules\Message\Events\NewMessage;
-use Modules\Message\Models\Message;
-use Modules\User\Models\User;
+use App\Modules\Chat\Events\ChatUpdated;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Chat\Tasks\UserInChatTask;
+use App\Modules\Message\Dto\CreateMessageDto;
+use App\Modules\Message\Events\NewMessage;
+use App\Modules\Message\Models\Message;
+use App\Modules\User\Models\User;
 use Throwable;
 
 final class CreateMessageAction extends Action

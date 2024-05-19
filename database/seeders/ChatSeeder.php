@@ -5,7 +5,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Modules\Chat\Models\Chat;
+use App\Modules\Chat\Models\Chat;
 
 class ChatSeeder extends Seeder
 {

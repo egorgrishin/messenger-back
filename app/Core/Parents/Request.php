@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;

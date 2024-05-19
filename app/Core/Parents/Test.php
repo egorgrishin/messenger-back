@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
-use Core\Classes\Auth\Jwt;
+use App\Core\Classes\Auth\Jwt;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\Event;

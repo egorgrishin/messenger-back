@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Core\Enums;
+namespace App\Core\Enums;
 
 enum HttpStatus: int
 {

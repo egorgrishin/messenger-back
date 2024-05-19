@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Broadcast;
-use Modules\User\Models\User;
+use App\Modules\User\Models\User;
 
 Broadcast::channel('users.{userId}.chats', function (User $user, int $userId): bool {
     return $user->id === $userId;

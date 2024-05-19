@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Actions;
+namespace App\Modules\Chat\Actions;
 
-use Core\Parents\Action;
+use App\Core\Parents\Action;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
-use Modules\Chat\Dto\GetUserChatsDto;
-use Modules\Chat\Models\Chat;
+use App\Modules\Chat\Dto\GetUserChatsDto;
+use App\Modules\Chat\Models\Chat;
 
 final class GetUserChatsAction extends Action
 {

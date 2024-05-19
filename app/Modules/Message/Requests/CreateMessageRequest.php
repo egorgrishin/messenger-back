@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Requests;
+namespace App\Modules\Message\Requests;
 
-use Core\Parents\Request;
-use Modules\Chat\Models\Chat;
-use Modules\Message\Dto\CreateMessageDto;
+use App\Core\Parents\Request;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Message\Dto\CreateMessageDto;
 
 final class CreateMessageRequest extends Request
 {

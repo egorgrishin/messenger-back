@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Requests;
+namespace App\Modules\Message\Requests;
 
-use Core\Parents\Request;
+use App\Core\Parents\Request;
 use Illuminate\Support\Facades\Log;
-use Modules\Message\Dto\GetChatMessagesDto;
+use App\Modules\Message\Dto\GetChatMessagesDto;
 
 final class GetChatMessagesRequest extends Request
 {

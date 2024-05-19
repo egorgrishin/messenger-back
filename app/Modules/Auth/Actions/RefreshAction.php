@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Actions;
+namespace App\Modules\Auth\Actions;
 
-use Core\Exceptions\HttpException;
-use Core\Parents\Action;
+use App\Core\Exceptions\HttpException;
+use App\Core\Parents\Action;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Modules\Auth\Dto\CreateRefreshTokenDto;
-use Modules\Auth\Dto\RefreshDto;
-use Modules\Auth\Models\RefreshToken;
-use Modules\Auth\Tasks\CreateRefreshTokenTask;
+use App\Modules\Auth\Dto\CreateRefreshTokenDto;
+use App\Modules\Auth\Dto\RefreshDto;
+use App\Modules\Auth\Models\RefreshToken;
+use App\Modules\Auth\Tasks\CreateRefreshTokenTask;
 use Throwable;
 
 final class RefreshAction extends Action

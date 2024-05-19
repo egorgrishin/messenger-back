@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Tests;
+namespace App\Modules\User\Tests;
 
-use Core\Parents\Test;
+use App\Core\Parents\Test;
 use Illuminate\Support\Str;
-use Modules\User\Models\User;
+use App\Modules\User\Models\User;
 
 final class CreateUserTest extends Test
 {

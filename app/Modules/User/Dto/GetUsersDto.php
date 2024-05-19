@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Dto;
+namespace App\Modules\User\Dto;
 
-use Core\Parents\Dto;
-use Modules\User\Requests\GetUsersRequest;
+use App\Core\Parents\Dto;
+use App\Modules\User\Requests\GetUsersRequest;
 
 final readonly class GetUsersDto extends Dto
 {

@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Actions;
+namespace App\Modules\Message\Actions;
 
-use Core\Exceptions\HttpException;
-use Core\Parents\Action;
+use App\Core\Exceptions\HttpException;
+use App\Core\Parents\Action;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Modules\Chat\Tasks\UserInChatTask;
-use Modules\Message\Dto\GetChatMessagesDto;
-use Modules\Message\Models\Message;
+use App\Modules\Chat\Tasks\UserInChatTask;
+use App\Modules\Message\Dto\GetChatMessagesDto;
+use App\Modules\Message\Models\Message;
 
 final class GetChatMessagesAction extends Action
 {

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Events;
+namespace App\Modules\Message\Events;
 
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Modules\Message\Models\Message;
-use Modules\Message\Resources\MessageResource;
+use App\Modules\Message\Models\Message;
+use App\Modules\Message\Resources\MessageResource;
 
 final class NewMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
 {

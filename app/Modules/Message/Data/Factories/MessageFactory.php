@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Data\Factories;
+namespace App\Modules\Message\Data\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Modules\Message\Models\Message;
+use App\Modules\Message\Models\Message;
 
 final class MessageFactory extends Factory
 {

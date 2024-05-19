@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Tasks;
+namespace App\Modules\Chat\Tasks;
 
-use Core\Parents\Task;
-use Modules\Chat\Models\Chat;
+use App\Core\Parents\Task;
+use App\Modules\Chat\Models\Chat;
 
 class UpdateLastMessageIdTask extends Task
 {

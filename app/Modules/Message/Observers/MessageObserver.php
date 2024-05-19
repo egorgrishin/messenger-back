@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Observers;
+namespace App\Modules\Message\Observers;
 
-use Core\Parents\Observer;
-use Modules\Chat\Tasks\UpdateLastMessageIdTask;
-use Modules\Message\Models\Message;
+use App\Core\Parents\Observer;
+use App\Modules\Chat\Tasks\UpdateLastMessageIdTask;
+use App\Modules\Message\Models\Message;
 
 final class MessageObserver extends Observer
 {

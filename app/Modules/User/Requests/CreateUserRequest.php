@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Requests;
+namespace App\Modules\User\Requests;
 
-use Core\Parents\Request;
-use Modules\User\Dto\CreateUserDto;
-use Modules\User\Models\User;
+use App\Core\Parents\Request;
+use App\Modules\User\Dto\CreateUserDto;
+use App\Modules\User\Models\User;
 
 final class CreateUserRequest extends Request
 {

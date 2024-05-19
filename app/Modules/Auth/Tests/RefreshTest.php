@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Tests;
+namespace App\Modules\Auth\Tests;
 
-use Core\Parents\Test;
+use App\Core\Parents\Test;
 use Illuminate\Support\Str;
-use Modules\Auth\Models\RefreshToken;
-use Modules\User\Models\User;
+use App\Modules\Auth\Models\RefreshToken;
+use App\Modules\User\Models\User;
 
 final class RefreshTest extends Test
 {

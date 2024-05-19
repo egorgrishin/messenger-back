@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
 abstract readonly class Dto
 {

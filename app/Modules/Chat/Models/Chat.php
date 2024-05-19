@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Models;
+namespace App\Modules\Chat\Models;
 
-use Core\Parents\Model;
+use App\Core\Parents\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\Chat\Data\Factories\ChatFactory;
-use Modules\Chat\Events\ChatUpdated;
-use Modules\Message\Models\Message;
-use Modules\User\Models\User;
+use App\Modules\Chat\Data\Factories\ChatFactory;
+use App\Modules\Chat\Events\ChatUpdated;
+use App\Modules\Message\Models\Message;
+use App\Modules\User\Models\User;
 
 /**
  * @property int $id

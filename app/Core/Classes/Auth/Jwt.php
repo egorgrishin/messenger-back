@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Classes\Auth;
+namespace App\Core\Classes\Auth;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Exceptions\HttpResponseException;

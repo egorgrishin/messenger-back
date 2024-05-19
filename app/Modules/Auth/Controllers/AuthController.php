@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Controllers;
+namespace App\Modules\Auth\Controllers;
 
-use Core\Parents\Controller;
+use App\Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Auth\Actions\LoginAction;
-use Modules\Auth\Actions\RefreshAction;
-use Modules\Auth\Requests\LoginRequest;
-use Modules\Auth\Requests\RefreshRequest;
+use App\Modules\Auth\Actions\LoginAction;
+use App\Modules\Auth\Actions\RefreshAction;
+use App\Modules\Auth\Requests\LoginRequest;
+use App\Modules\Auth\Requests\RefreshRequest;
 
 final class AuthController extends Controller
 {

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Data\Factories;
+namespace App\Modules\Chat\Data\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Modules\Chat\Models\Chat;
+use App\Modules\Chat\Models\Chat;
 
 final class ChatFactory extends Factory
 {

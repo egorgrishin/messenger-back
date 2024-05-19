@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Resources;
+namespace App\Modules\Chat\Resources;
 
-use Core\Parents\JsonResource;
+use App\Core\Parents\JsonResource;
 use Illuminate\Http\Request;
-use Modules\Message\Resources\MessageResource;
-use Modules\User\Resources\UserResource;
+use App\Modules\Message\Resources\MessageResource;
+use App\Modules\User\Resources\UserResource;
 
 class ChatResource extends JsonResource
 {

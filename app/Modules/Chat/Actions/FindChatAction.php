@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Actions;
+namespace App\Modules\Chat\Actions;
 
-use Core\Exceptions\HttpException;
-use Core\Parents\Action;
+use App\Core\Exceptions\HttpException;
+use App\Core\Parents\Action;
 use Illuminate\Support\Facades\DB;
-use Modules\Chat\Dto\FindChatDto;
-use Modules\Chat\Models\Chat;
-use Modules\Chat\Tasks\UserInChatTask;
+use App\Modules\Chat\Dto\FindChatDto;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Chat\Tasks\UserInChatTask;
 
 final class FindChatAction extends Action
 {

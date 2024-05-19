@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Providers;
+namespace App\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Message\Models\Message;
-use Modules\Message\Observers\MessageObserver;
+use App\Modules\Message\Models\Message;
+use App\Modules\Message\Observers\MessageObserver;
 
 class DatabaseServiceProvider extends ServiceProvider
 {

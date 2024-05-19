@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Message\Tests;
+namespace App\Modules\Message\Tests;
 
-use Core\Parents\Model;
-use Core\Parents\Test;
+use App\Core\Parents\Model;
+use App\Core\Parents\Test;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Modules\Chat\Events\ChatUpdated;
-use Modules\Chat\Models\Chat;
-use Modules\Message\Events\NewMessage;
-use Modules\Message\Models\Message;
-use Modules\User\Models\User;
+use App\Modules\Chat\Events\ChatUpdated;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\Message\Events\NewMessage;
+use App\Modules\Message\Models\Message;
+use App\Modules\User\Models\User;
 
 final class CreateMessageTest extends Test
 {

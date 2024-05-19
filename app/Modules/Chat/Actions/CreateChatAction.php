@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Actions;
+namespace App\Modules\Chat\Actions;
 
-use Core\Exceptions\HttpException;
-use Core\Parents\Action;
+use App\Core\Exceptions\HttpException;
+use App\Core\Parents\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Modules\Chat\Dto\CreateChatDto;
-use Modules\Chat\Models\Chat;
+use App\Modules\Chat\Dto\CreateChatDto;
+use App\Modules\Chat\Models\Chat;
 use Throwable;
 
 final class CreateChatAction extends Action

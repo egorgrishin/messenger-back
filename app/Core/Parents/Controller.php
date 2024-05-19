@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
-use Core\Concerns\Actionable;
+use App\Core\Concerns\Actionable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 

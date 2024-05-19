@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Chat\Tests;
+namespace App\Modules\Chat\Tests;
 
-use Core\Parents\Test;
+use App\Core\Parents\Test;
 use Illuminate\Support\Facades\Event;
-use Modules\Chat\Events\ChatUpdated;
-use Modules\Chat\Models\Chat;
-use Modules\User\Models\User;
+use App\Modules\Chat\Events\ChatUpdated;
+use App\Modules\Chat\Models\Chat;
+use App\Modules\User\Models\User;
 
 final class CreateChatTest extends Test
 {

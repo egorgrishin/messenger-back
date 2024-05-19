@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\User\Requests;
+namespace App\Modules\User\Requests;
 
-use Core\Parents\Request;
-use Modules\User\Dto\GetUsersDto;
+use App\Core\Parents\Request;
+use App\Modules\User\Dto\GetUsersDto;
 
 final class GetUsersRequest extends Request
 {

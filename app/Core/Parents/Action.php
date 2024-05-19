@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Parents;
+namespace App\Core\Parents;
 
-use Core\Concerns\Taskable;
+use App\Core\Concerns\Taskable;
 
 abstract class Action
 {

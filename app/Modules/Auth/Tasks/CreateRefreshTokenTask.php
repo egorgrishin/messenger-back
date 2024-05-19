@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Auth\Tasks;
+namespace App\Modules\Auth\Tasks;
 
-use Core\Parents\Task;
+use App\Core\Parents\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Modules\Auth\Dto\CreateRefreshTokenDto;
-use Modules\Auth\Models\RefreshToken;
+use App\Modules\Auth\Dto\CreateRefreshTokenDto;
+use App\Modules\Auth\Models\RefreshToken;
 use Throwable;
 
 final class CreateRefreshTokenTask extends Task
