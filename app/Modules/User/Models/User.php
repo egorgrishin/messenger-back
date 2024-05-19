@@ -8,6 +8,8 @@ use DateTimeInterface;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Chat\Models\Chat;
 use Modules\User\Data\Factories\UserFactory;
 
 /**
@@ -35,5 +37,10 @@ final class User extends Model implements AuthenticatableContract
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
+    }
+
+    public function chats(): BelongsToMany
+    {
+        return $this->belongsToMany(Chat::class);
     }
 }

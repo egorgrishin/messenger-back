@@ -9,11 +9,6 @@ use Modules\User\Models\User;
 
 final class CreateUserRequest extends Request
 {
-    public function authorize(): bool
-    {
-        return !$this->user();
-    }
-
     public function rules(): array
     {
         $user_class = User::class;

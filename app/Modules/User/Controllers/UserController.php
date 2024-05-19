@@ -6,11 +6,10 @@ namespace Modules\User\Controllers;
 use Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\User\Actions\CreateUserAction;
-use Modules\User\Actions\FindUserAction;
 use Modules\User\Actions\GetUsersAction;
 use Modules\User\Requests\CreateUserRequest;
-use Modules\User\Requests\FindUserRequest;
 use Modules\User\Requests\GetUsersRequest;
+use Modules\User\Resources\UserResource;
 
 final class UserController extends Controller
 {
@@ -22,18 +21,7 @@ final class UserController extends Controller
         $users = $this->action(GetUsersAction::class)->run(
             $request->toDto()
         );
-        return $this->json($users);
-    }
-
-    /**
-     * Возвращает список пользователей с фильтром по нику
-     */
-    public function find(FindUserRequest $request): JsonResponse
-    {
-        $user = $this->action(FindUserAction::class)->run(
-            (int) $request->route('userId')
-        );
-        return $this->json($user);
+        return $this->collection($users, UserResource::class)->response();
     }
 
     /**

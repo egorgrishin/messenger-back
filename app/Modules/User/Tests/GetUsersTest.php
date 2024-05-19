@@ -13,18 +13,10 @@ final class GetUsersTest extends Test
         $nick = 'aaa';
         $user = User::factory()->create();
         User::factory()->createMany([
-            [
-                'nick' => "{$nick}1",
-            ],
-            [
-                'nick' => "{$nick}2",
-            ],
-            [
-                'nick' => "{$nick}3",
-            ],
-            [
-                'nick' => "{$nick}4",
-            ],
+            ['nick' => "{$nick}1"],
+            ['nick' => "{$nick}2"],
+            ['nick' => "{$nick}3"],
+            ['nick' => "{$nick}4"],
         ]);
 
         $token = $this->jwt->createToken($user);
@@ -36,11 +28,13 @@ final class GetUsersTest extends Test
             ])
             ->assertOk()
             ->assertJsonStructure([
-                '*' => [
-                    'id',
-                    'nick',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'nick',
+                    ],
                 ],
             ])
-            ->assertJsonCount(4);
+            ->assertJsonCount(4, 'data');
     }
 }

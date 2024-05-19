@@ -10,13 +10,14 @@ final class GetUsersRequest extends Request
 {
     public function authorize(): bool
     {
-        return (bool) $this->user();
+        return $this->hasUser();
     }
 
     public function rules(): array
     {
         return [
-            'nick' => "required|min:3|max:32",
+            'nick'    => "required|min:1|max:32",
+            'startId' => 'nullable|integer',
         ];
     }
 
