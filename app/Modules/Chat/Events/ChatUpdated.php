@@ -29,11 +29,13 @@ class ChatUpdated implements ShouldBroadcast, ShouldDispatchAfterCommit
         return new PrivateChannel("users.$this->userId.chats");
     }
 
+    /** @noinspection PhpUnused */
     public function broadcastWith(): array
     {
         return (new ChatResource($this->chat->toArray()))->resolve();
     }
 
+    /** @noinspection PhpUnused */
     public function broadcastAs(): string
     {
         return 'chat.updated';

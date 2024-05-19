@@ -11,12 +11,14 @@ use App\Modules\Chat\Data\Factories\ChatFactory;
 use App\Modules\Chat\Events\ChatUpdated;
 use App\Modules\Message\Models\Message;
 use App\Modules\User\Models\User;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
  * @property string|null $title
  * @property bool $is_dialog
  * @property int $last_message_id
+ * @property Collection $users
  */
 final class Chat extends Model
 {

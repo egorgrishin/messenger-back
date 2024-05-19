@@ -13,7 +13,7 @@ class MessageResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(?Request $request = null): array
+    public function toArray(Request $request): array
     {
         $message = $this->resource;
         return [

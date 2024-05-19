@@ -7,16 +7,14 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
-use App\Modules\Message\Models\Message;
 use App\Modules\Message\Resources\MessageResource;
 
 final class NewMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
 
     public function __construct(
-        private readonly Message $message,
+        private readonly array $message,
     ) {}
 
     public function broadcastOn(): PrivateChannel
@@ -24,11 +22,13 @@ final class NewMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
         return new PrivateChannel('chats.' . $this->message['chat_id']);
     }
 
+    /** @noinspection PhpUnused */
     public function broadcastWith(): array
     {
-        return (new MessageResource($this->message))->toArray();
+        return (new MessageResource($this->message))->resolve();
     }
 
+    /** @noinspection PhpUnused */
     public function broadcastAs(): string
     {
         return 'message.new';

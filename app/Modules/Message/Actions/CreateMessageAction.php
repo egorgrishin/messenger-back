@@ -25,7 +25,7 @@ final class CreateMessageAction extends Action
 
         try {
             $message = $this->createMessage($dto);
-            NewMessage::dispatch($message);
+            NewMessage::dispatch($message->toArray());
             $this->sendChatUpdatedEvent($message);
             return $message->toArray();
         } catch (Throwable $exception) {
@@ -55,10 +55,9 @@ final class CreateMessageAction extends Action
     {
         /** @var Chat $chat */
         $chat = $message->chat()->first();
+        $chat->load('users:id,nick');
         $chat->setRelation('lastMessage', $message);
-        $chat->users()
-            ->select('users.id')
-            ->get()
+        $chat->users
             ->each(fn (User $user) => ChatUpdated::dispatch($chat, $user->id));
     }
 }
