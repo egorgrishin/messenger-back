@@ -43,23 +43,8 @@ final class GetUserChatsAction extends Action
                     ->where('user_id', $dto->userId);
             })
             ->with([
-                'users' => function (BelongsToMany $query) use ($dto) {
-                    $query
-                        ->select([
-                            'users.id',
-                            'nick',
-                        ])
-                        ->where('users.id', '<>', $dto->userId);
-                },
-                'lastMessage' => function (HasOne $query) {
-                    $query->select([
-                        'messages.id',
-                        'chat_id',
-                        'user_id',
-                        'text',
-                        'created_at',
-                    ]);
-                },
+                'users:users.id,nick',
+                'lastMessage',
             ])
             ->orderByDesc('last_message_id')
             ->limit(self::LIMIT)
