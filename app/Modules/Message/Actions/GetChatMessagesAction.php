@@ -13,7 +13,7 @@ use Modules\Message\Models\Message;
 final class GetChatMessagesAction extends Action
 {
     /**
-     * Максимальное количество получаемых чатов
+     * Максимальное количество получаемых сообщений
      */
     private const LIMIT = 100;
 
