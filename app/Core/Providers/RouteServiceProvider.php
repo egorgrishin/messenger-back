@@ -21,6 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadApiRoutes();
+        $this->loadBroadcastRoutes();
     }
 
     /**
@@ -35,6 +36,17 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('api')
                 ->prefix('/api/' . $version)
                 ->group($route_path);
+        }
+    }
+
+    /**
+     * Подключает роуты трансляции различных модулей
+     */
+    private function loadBroadcastRoutes(): void
+    {
+        $paths = glob(app_path('Modules/*/Routes/channels.*'));
+        foreach ($paths as $route_path) {
+            Route::middleware('api')->group($route_path);
         }
     }
 }
