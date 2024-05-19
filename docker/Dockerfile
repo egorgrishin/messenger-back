@@ -3,7 +3,6 @@ FROM ubuntu:22.04
 LABEL maintainer="Taylor Otwell"
 
 ARG WWWGROUP
-ARG POSTGRES_VERSION=15
 
 WORKDIR /var/www/html
 
@@ -31,7 +30,6 @@ RUN apt-get update \
     && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && apt-get update \
     && apt-get install -y mysql-client \
-    && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
