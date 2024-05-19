@@ -21,7 +21,10 @@ final class UserController extends Controller
         $users = $this->action(GetUsersAction::class)->run(
             $request->toDto()
         );
-        return $this->collection($users, UserResource::class)->response();
+
+        return $this
+            ->collection($users, UserResource::class)
+            ->response();
     }
 
     /**
@@ -29,9 +32,13 @@ final class UserController extends Controller
      */
     public function create(CreateUserRequest $request): JsonResponse
     {
-        $this->action(CreateUserAction::class)->run(
+        $user = $this->action(CreateUserAction::class)->run(
             $request->toDto()
         );
-        return $this->json([], 201);
+
+        return $this
+            ->resource($user, UserResource::class)
+            ->response()
+            ->setStatusCode(201);
     }
 }
