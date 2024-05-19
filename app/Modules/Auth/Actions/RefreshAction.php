@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Modules\Auth\Actions;
 
+use Core\Exceptions\HttpException;
 use Core\Parents\Action;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -10,7 +11,6 @@ use Modules\Auth\Dto\CreateRefreshTokenDto;
 use Modules\Auth\Dto\RefreshDto;
 use Modules\Auth\Models\RefreshToken;
 use Modules\Auth\Tasks\CreateRefreshTokenTask;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 final class RefreshAction extends Action
@@ -53,15 +53,15 @@ final class RefreshAction extends Action
     private function validate(?RefreshToken $refresh): void
     {
         if ($refresh === null) {
-            throw new HttpException(401);
+            throw new HttpException(401, 'Сессия не найдена');
         }
         if ($refresh->is_blocked) {
             $this->blockTokenChain($refresh->chain);
-            throw new HttpException(401);
+            throw new HttpException(401, 'Сессия была заблокирована');
         }
         if ($refresh->expired_in < now()) {
             $refresh->block();
-            throw new HttpException(401);
+            throw new HttpException(401, 'Срок действия токена истек');
         }
     }
 

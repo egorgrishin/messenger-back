@@ -17,6 +17,7 @@ final class RefreshTest extends Test
             'nick'     => $nick = Str::random(),
             'password' => $password = Str::password(),
         ]);
+        // Получаем токен
         $refreshToken = $this->getRefreshToken($nick, $password);
 
         $this->assertDatabaseHas(RefreshToken::class, [
@@ -25,30 +26,27 @@ final class RefreshTest extends Test
             'is_blocked' => 0,
         ])->assertDatabaseCount(RefreshToken::class, 1);
 
+        // Успешно обновляем токен
         $response = $this->postJson('/api/v1/refresh', [
             'refreshToken' => $refreshToken,
         ]);
-        $response
-            ->assertOk()
-            ->assertJsonStructure([
-                'accessToken',
-                'refreshToken',
-            ]);
+        $response->assertOk()->assertJsonStructure([
+            'accessToken',
+            'refreshToken',
+        ]);
         $newRefreshToken = $response->json('refreshToken');
 
-        $this
-            ->assertDatabaseHas(RefreshToken::class, [
-                'ulid'       => $refreshToken,
-                'user_id'    => $user->id,
-                'is_blocked' => 1,
-            ])
-            ->assertDatabaseHas(RefreshToken::class, [
-                'ulid'       => $newRefreshToken,
-                'user_id'    => $user->id,
-                'is_blocked' => 0,
-            ])
-            ->assertDatabaseCount(RefreshToken::class, 2);
+        $this->assertDatabaseHas(RefreshToken::class, [
+            'ulid'       => $refreshToken,
+            'user_id'    => $user->id,
+            'is_blocked' => 1,
+        ])->assertDatabaseHas(RefreshToken::class, [
+            'ulid'       => $newRefreshToken,
+            'user_id'    => $user->id,
+            'is_blocked' => 0,
+        ])->assertDatabaseCount(RefreshToken::class, 2);
 
+        // Отправляем на обновление старый токен. Блокируется все семейство и возвращается статус 401
         $response = $this->postJson('/api/v1/refresh', [
             'refreshToken' => $refreshToken,
         ]);
