@@ -5,7 +5,6 @@ namespace Modules\Message\Controllers;
 
 use Core\Parents\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Modules\Message\Actions\CreateMessageAction;
 use Modules\Message\Actions\GetChatMessagesAction;
 use Modules\Message\Requests\CreateMessageRequest;
@@ -32,11 +31,14 @@ final class MessageController extends Controller
     /**
      * Возвращает список сообщений чата
      */
-    public function getChatMessages(GetChatMessagesRequest $request): AnonymousResourceCollection
+    public function getChatMessages(GetChatMessagesRequest $request): JsonResponse
     {
         $messages = $this->action(GetChatMessagesAction::class)->run(
             $request->toDto()
         );
-        return MessageResource::collection($messages);
+
+        return $this
+            ->collection($messages, MessageResource::class)
+            ->response();
     }
 }
