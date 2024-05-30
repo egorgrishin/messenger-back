@@ -10,10 +10,11 @@ services:
             - 'host.docker.internal:host-gateway'
         ports:
             - '80:80'
-            - '6001:6001'
+            - '6002:6002'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
+            SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6002 --port=80"
         volumes:
             - .:/var/www/html
         networks:
