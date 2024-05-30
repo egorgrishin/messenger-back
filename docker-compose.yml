@@ -49,6 +49,20 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+    soketi:
+        image: 'quay.io/soketi/soketi:latest-16-alpine'
+        environment:
+            SOKETI_DEBUG: '1'
+#            DEFAULT_APP_WEBHOOKS: 'http://backend/api/ws-hook/'
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+        ports:
+            - '6001:6001'
+        volumes:
+            - ./soketi.json:/app/config.json
+        command: ["/app/bin/server.js", "start", "--config=/app/config.json"]
+        networks:
+            - messenger
 networks:
     messenger:
         driver: bridge

@@ -17,6 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+soketi.json
 composer.lock
 rr
 .rr.yaml
