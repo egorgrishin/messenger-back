@@ -14,9 +14,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nick', 32)->unique();
-            $table->string('password');
+            $table->string('login', 32)->unique();
+            $table->string('nick', 32);
+            $table->string('short_link', 32)->nullable()->unique();
+            $table->string('email')->nullable()->unique();
+            $table->string('status', 500)->nullable();
+            $table->string('code_word')->nullable();
+            $table->string('code_hint')->nullable();
             $table->string('avatar_filename', 63)->nullable();
+            $table->string('password');
             $table->timestamp('created_at')->nullable()->index();
             $table->timestamp('updated_at')->nullable();
         });

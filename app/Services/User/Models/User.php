@@ -6,10 +6,10 @@ namespace App\Services\User\Models;
 use App\Core\Parents\Model;
 use App\Services\Chat\Models\Chat;
 use App\Services\User\Data\Factories\UserFactory;
-use App\Services\User\Exceptions\SaveAvatarException;
 use DateTimeInterface;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\UploadedFile;
@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
+ * @property string $login
  * @property string $nick
+ * @property string|null $short_link
+ * @property string|null $email
+ * @property string|null $status
+ * @property string|null $code_word
+ * @property string|null $code_hint
  * @property string|null $avatar_filename
  * @property string $password
  * @property DateTimeInterface $created_at
@@ -29,6 +35,10 @@ final class User extends Model implements AuthenticatableContract
 
     protected $hidden = [
         'password',
+    ];
+
+    protected $appends = [
+        'avatar_url',
     ];
 
     protected function casts(): array
@@ -49,26 +59,28 @@ final class User extends Model implements AuthenticatableContract
     }
 
     /** @noinspection PhpUnused */
-    public function getAvatarLinkAttribute(): ?string
+    protected function avatarUrl(): Attribute
     {
-        return $this->avatar_filename
-            ? $this->avatar_filename
-            : null;
+        $getter = function () {
+            return $this->avatar_filename
+                ? $this->avatar_filename
+                : null;
+        };
+
+        return new Attribute(get: $getter);
     }
 
     /**
-     * @throws \Exception
+     * Сохраняет файл аватара в хранилище и записывает путь к нему
      */
     public function saveAvatar(?UploadedFile $avatar): void
     {
-        if ($avatar === null) {
+        if (!$avatar) {
             return;
         }
+
         $filename = Storage::disk('userAvatars')->putFile($avatar);
-        if ($filename === false) {
-            throw new SaveAvatarException();
-        }
-        $this->avatar_filename = $filename;
+        $this->avatar_filename = $filename ?: null;
     }
 
     public function deleteAvatar(): void
@@ -76,10 +88,5 @@ final class User extends Model implements AuthenticatableContract
         if ($this->avatar_filename) {
             Storage::disk('userAvatars')->delete($this->avatar_filename);
         }
-    }
-
-    private function getAvatarFilename()
-    {
-
     }
 }

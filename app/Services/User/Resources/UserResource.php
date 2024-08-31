@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Services\User\Resources;
 
 use App\Core\Parents\JsonResource;
+use App\Services\User\Models\User;
 use Illuminate\Http\Request;
 
 class UserResource extends JsonResource
@@ -15,18 +16,12 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var User $user */
         $user = $this->resource;
         return [
-            'id'         => $user['id'],
-            'nick'       => $user['nick'],
-            'createdAt' => $this->when(
-                array_key_exists('created_at', $user),
-                fn () => $user['created_at'],
-            ),
-            'updatedAt' => $this->when(
-                array_key_exists('updated_at', $user),
-                fn () => $user['updated_at'],
-            ),
+            'id'        => $user->id,
+            'nick'      => $user->nick,
+            'avatarUrl' => $this->whenAppended('avatar_url'),
         ];
     }
 }
