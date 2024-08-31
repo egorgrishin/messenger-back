@@ -32,6 +32,7 @@ final class GetUsersTest extends Test
                     '*' => [
                         'id',
                         'nick',
+                        'avatarUrl',
                     ],
                 ],
             ])
