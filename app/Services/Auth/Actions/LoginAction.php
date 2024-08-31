@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Auth\Actions;
+namespace App\Services\Auth\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Modules\Auth\Dto\CreateRefreshTokenDto;
-use App\Modules\Auth\Dto\LoginDto;
-use App\Modules\Auth\Tasks\CreateRefreshTokenTask;
+use App\Services\Auth\Dto\CreateRefreshTokenDto;
+use App\Services\Auth\Dto\LoginDto;
+use App\Services\Auth\Tasks\CreateRefreshTokenTask;
 use Throwable;
 
 final class LoginAction extends Action
