@@ -6,8 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Modules\Chat\Models\Chat;
-use App\Modules\Message\Models\Message;
+use App\Services\Chat\Models\Chat;
+use App\Services\Message\Models\Message;
 
 class MessageSeeder extends Seeder
 {

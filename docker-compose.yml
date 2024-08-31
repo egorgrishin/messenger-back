@@ -1,68 +1,67 @@
 version: '3'
 services:
-    backend:
-        build:
-            context: docker
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        ports:
-            - '80:80'
-            - '6002:6002'
-        environment:
-            WWWUSER: '${WWWUSER}'
-            LARAVEL_SAIL: 1
-            SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6002 --port=80"
-        volumes:
-            - .:/var/www/html
-        networks:
-          - messenger
-        depends_on:
-            - mysql
-            - redis
-    mysql:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-        ports:
-            - '3306:3306'
-        volumes:
-            - ./database/mysql:/var/lib/mysql/
-        networks:
-          - messenger
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
-            retries: 3
-            timeout: 5s
-    redis:
-        image: 'redis:alpine'
-        ports:
-            - '6379:6379'
-        networks:
-          - messenger
-        healthcheck:
-            test: ["CMD", "redis-cli", "ping"]
-            retries: 3
-            timeout: 5s
-    soketi:
-        image: 'quay.io/soketi/soketi:latest-16-alpine'
-        environment:
-            SOKETI_DEBUG: '1'
-#            DEFAULT_APP_WEBHOOKS: 'http://backend/api/ws-hook/'
-#        extra_hosts:
-#            - 'host.docker.internal:host-gateway'
-        ports:
-            - '6001:6001'
-        volumes:
-            - ./soketi.json:/app/config.json
-        command: ["/app/bin/server.js", "start", "--config=/app/config.json"]
-        networks:
-            - messenger
+  backend:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+      args:
+        WWWGROUP: '${WWWGROUP}'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '80:80'
+#      - '9003:9003'
+    environment:
+      WWWUSER: '${WWWUSER}'
+      LARAVEL_SAIL: 1
+    volumes:
+      - .:/var/www/html
+    networks:
+      - messenger
+    depends_on:
+      - mysql
+      - redis
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database/mysql:/var/lib/mysql/
+    networks:
+      - messenger
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+    networks:
+      - messenger
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      retries: 3
+      timeout: 5s
+  soketi:
+    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    environment:
+      SOKETI_DEBUG: '1'
+    #            DEFAULT_APP_WEBHOOKS: 'http://backend/api/ws-hook/'
+    #        extra_hosts:
+    #            - 'host.docker.internal:host-gateway'
+    ports:
+      - '6001:6001'
+    volumes:
+      - ./soketi.json:/app/config.json
+    command: [ "/app/bin/server.js", "start", "--config=/app/config.json" ]
+    networks:
+      - messenger
 networks:
-    messenger:
-        driver: bridge
+  messenger:
+    driver: bridge

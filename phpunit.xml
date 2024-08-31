@@ -9,7 +9,7 @@
 <!--            <directory>tests/Unit</directory>-->
 <!--        </testsuite>-->
         <testsuite name="Feature">
-            <directory>app/Modules/*/Tests</directory>
+            <directory>app/Services/*/Tests</directory>
         </testsuite>
     </testsuites>
     <source>

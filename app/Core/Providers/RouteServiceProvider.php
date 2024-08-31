@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     private function loadApiRoutes(): void
     {
-        $paths = glob(app_path('Modules/*/Routes/rest.*'));
+        $paths = glob(app_path('Services/*/Routes/rest.*'));
         foreach ($paths as $route_path) {
             $route_data = explode('.', $route_path);
             $version = $route_data[1];
@@ -44,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     private function loadBroadcastRoutes(): void
     {
-        $paths = glob(app_path('Modules/*/Routes/channels.*'));
+        $paths = glob(app_path('Services/*/Routes/channels.*'));
         foreach ($paths as $route_path) {
             Route::middleware('api')->group($route_path);
         }

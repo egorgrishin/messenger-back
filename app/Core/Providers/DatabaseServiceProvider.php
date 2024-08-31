@@ -3,8 +3,8 @@
 namespace App\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Modules\Message\Models\Message;
-use App\Modules\Message\Observers\MessageObserver;
+use App\Services\Message\Models\Message;
+use App\Services\Message\Observers\MessageObserver;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -23,7 +23,7 @@ class DatabaseServiceProvider extends ServiceProvider
     {
         $this->registerObservers();
 
-        $paths = glob(app_path('Modules/*/Data/Migrations/*'));
+        $paths = glob(app_path('Services/*/Data/Migrations/*'));
         $this->loadMigrationsFrom($paths);
     }
 
