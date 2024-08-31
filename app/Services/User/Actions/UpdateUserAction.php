@@ -5,24 +5,29 @@ namespace App\Services\User\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
+use App\Services\User\Dto\UpdateUserDto;
+use App\Services\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use App\Services\User\Dto\CreateUserDto;
-use App\Services\User\Models\User;
 use Throwable;
 
-final class CreateUserAction extends Action
+class UpdateUserAction extends Action
 {
     /**
-     * Создает нового пользователя
+     * Обновляет пользователя
      */
-    public function run(CreateUserDto $dto): User
+    public function run(UpdateUserDto $dto): User
     {
         $this->validate($dto);
 
         try {
-            return $this->createUser($dto);
+            $user = $this->getUserById($dto->id);
+            $this->updateUser($user, $dto);
+            return $user;
+        } catch (ModelNotFoundException) {
+            throw new HttpException(404, 'Пользователь не найден');
         } catch (Throwable $exception) {
             Log::error($exception);
             throw new HttpException(500);
@@ -32,17 +37,17 @@ final class CreateUserAction extends Action
     /**
      * Проверяет данные DTO на корректность
      */
-    private function validate(CreateUserDto $dto): void
+    private function validate(UpdateUserDto $dto): void
     {
         $users = $this->getUsersForValidate($dto);
-        if ($users->where('login', $dto->login)->isNotEmpty()) {
-            throw new HttpException(422, 'Логин уже используется');
-        }
         if ($users->where('nick', $dto->nick)->isNotEmpty()) {
             throw new HttpException(422, 'Имя аккаунта уже используется');
         }
         if ($dto->email && $users->where('email', $dto->email)->isNotEmpty()) {
             throw new HttpException(422, 'Адрес электронной почты уже используется');
+        }
+        if ($dto->shortLink && $users->where('short_link', $dto->shortLink)->isNotEmpty()) {
+            throw new HttpException(422, 'Короткая ссылка уже используется');
         }
         if (!$dto->email && !$dto->codeWord) {
             throw new HttpException(422, 'Должен быть указан адрес электронной почты или кодовое слово');
@@ -50,42 +55,51 @@ final class CreateUserAction extends Action
     }
 
     /**
-     * Возвращает пользователей, у которых совпадает login, nick, или email
+     * Возвращает пользователей, у которых совпадает nick, email или short_link
      * с указанными пользователем
      */
-    private function getUsersForValidate(CreateUserDto $dto): Collection
+    private function getUsersForValidate(UpdateUserDto $dto): Collection
     {
         return User::query()
             ->select([
-                'login',
                 'nick',
                 'email',
+                'short_link',
             ])
-            ->where('login', $dto->login)
-            ->orWhere('nick', $dto->nick)
+            ->where('id', '<>', $dto->id)
+            ->where('nick', $dto->nick)
             ->when($dto->email, function (Builder $query) use ($dto) {
                 $query->orWhere('email', $dto->email);
+            })
+            ->when($dto->shortLink, function (Builder $query) use ($dto) {
+                $query->orWhere('short_link', $dto->shortLink);
             })
             ->get();
     }
 
+
     /**
-     * Создает нового пользователя
+     * Обновляет пользователя
      * @throws Throwable
      */
-    private function createUser(CreateUserDto $dto): User
+    private function updateUser(User $user, UpdateUserDto $dto): void
     {
-        $user = new User();
-        $user->login = $dto->login;
         $user->nick = $dto->nick;
+        $user->status = $dto->status;
         $user->short_link = $dto->shortLink;
         $user->email = $dto->email;
         $user->code_word = $dto->codeWord;
         $user->code_hint = $dto->codeHint;
-        $user->password = $dto->password;
-        $user->saveAvatar($dto->avatar);
         $user->saveOrFail();
+    }
 
-        return $user;
+    /**
+     * Возвращает пользователя по ID
+     * @throws ModelNotFoundException<User>
+     */
+    private function getUserById(int $userId): User
+    {
+        /** @var User */
+        return User::query()->findOrFail($userId);
     }
 }

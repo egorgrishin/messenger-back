@@ -7,6 +7,7 @@ use App\Services\User\Controllers\UserController;
 
 Route::get('/users', [UserController::class, 'get']);
 Route::post('/users', [UserController::class, 'create']);
+Route::put('/users/{userId}', [UserController::class, 'update']);
 
 Route::put('/users/{userId}/avatar', [UserAvatarController::class, 'update']);
 Route::delete('/users/{userId}/avatar', [UserAvatarController::class, 'delete']);

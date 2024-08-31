@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Services\User\Controllers;
 
 use App\Core\Parents\Controller;
+use App\Services\User\Actions\UpdateUserAction;
+use App\Services\User\Requests\UpdateUserRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\User\Actions\CreateUserAction;
 use App\Services\User\Actions\GetUsersAction;
@@ -40,5 +42,19 @@ final class UserController extends Controller
             ->resource($user, UserResource::class)
             ->response()
             ->setStatusCode(201);
+    }
+
+    /**
+     * Создает нового пользователя
+     */
+    public function update(UpdateUserRequest $request): JsonResponse
+    {
+        $user = $this->action(UpdateUserAction::class)->run(
+            $request->toDto()
+        );
+
+        return $this
+            ->resource($user, UserResource::class)
+            ->response();
     }
 }

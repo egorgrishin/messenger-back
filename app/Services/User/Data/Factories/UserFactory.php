@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Services\User\Data\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use App\Services\User\Models\User;
 
 final class UserFactory extends Factory
@@ -15,6 +14,7 @@ final class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'login'    => $this->faker->unique()->userName(),
             'nick'     => $this->faker->unique()->userName(),
             'password' => UserFactory::$password ??= 'password',
         ];
