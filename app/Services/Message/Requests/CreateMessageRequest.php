@@ -20,6 +20,8 @@ final class CreateMessageRequest extends Request
         return [
             'chatId' => "required|integer|exists:$chatClass,id",
             'text'   => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'image',
         ];
     }
 
