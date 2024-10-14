@@ -5,11 +5,10 @@ namespace App\Services\Chat\Actions;
 
 use App\Core\Parents\Action;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use App\Services\Chat\Dto\GetUserChatsDto;
 use App\Services\Chat\Models\Chat;
+use Illuminate\Support\Collection;
 
 final class GetUserChatsAction extends Action
 {
@@ -21,7 +20,7 @@ final class GetUserChatsAction extends Action
     /**
      * Возвращает список чатов пользователя
      */
-    public function run(GetUserChatsDto $dto): array
+    public function run(GetUserChatsDto $dto): Collection
     {
         return Chat::query()
             ->select([
@@ -48,7 +47,6 @@ final class GetUserChatsAction extends Action
             ])
             ->orderByDesc('last_message_id')
             ->limit(self::LIMIT)
-            ->get()
-            ->toArray();
+            ->get();
     }
 }

@@ -17,16 +17,15 @@ final class CreateChatAction extends Action
     /**
      * Создает новый чат и добавляет в него пользователей, если они указаны
      */
-    public function run(CreateChatDto $dto): array
+    public function run(CreateChatDto $dto): Chat
     {
         $this->validate($dto);
 
         try {
-            /** @var Chat $chat */
-            $chat = DB::transaction(function () use ($dto) {
+            /** @var Chat */
+            return DB::transaction(function () use ($dto) {
                 return $this->createChat($dto)->attachUsers($dto->users ?? []);
             });
-            return $chat->toArray();
         } catch (Throwable $exception) {
             Log::error($exception);
             throw new HttpException(500);
