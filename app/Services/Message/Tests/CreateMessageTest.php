@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace App\Services\Message\Tests;
 
-use App\Core\Parents\Model;
 use App\Core\Parents\Test;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
 use App\Services\Chat\Events\ChatUpdated;
 use App\Services\Chat\Models\Chat;
+use App\Services\File\Models\File;
 use App\Services\Message\Events\NewMessage;
 use App\Services\Message\Models\Message;
 use App\Services\User\Models\User;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 
 final class CreateMessageTest extends Test
 {
@@ -30,7 +30,7 @@ final class CreateMessageTest extends Test
         $this
             ->postJson("/api/v1/messages", [
                 'chatId' => $chat->id,
-                'text'   => $text = Str::random(),
+                'text'   => Str::random(),
             ], [
                 'Authorization' => "Bearer $token",
             ])
@@ -40,7 +40,7 @@ final class CreateMessageTest extends Test
         $chat->users()->attach([$user->id, $user2->id]);
 
         // Создаем сообщение в чате от пользователя, не состоящего в нем
-        $this
+        $response = $this
             ->postJson("/api/v1/messages", [
                 'chatId' => $chat->id,
                 'text'   => $text = Str::random(),
@@ -60,7 +60,26 @@ final class CreateMessageTest extends Test
             ->assertDatabaseCount(Message::class, 1)
             ->assertDatabaseHas(Chat::class, [
                 'id'              => $chat->id,
-                'last_message_id' => 1,
+                'last_message_id' => $response->json('data.id'),
             ]);
+
+        $files = File::factory()->createMany(array_fill(0, $filesCount = 5, ['user_id' => $user->id]));
+        $this->assertDatabaseHas(File::class, [
+            'user_id' => $user->id,
+        ])->assertDatabaseCount(File::class, $filesCount);
+
+        $response = $this
+            ->postJson("/api/v1/messages", [
+                'chatId'    => $chat->id,
+                'fileUuids' => $files->pluck('uuid')->toArray(),
+            ], [
+                'Authorization' => "Bearer $token",
+            ])
+            ->assertCreated();
+
+        $this->assertDatabaseHas(File::class, [
+            'user_id'    => $user->id,
+            'message_id' => $response->json('data.id')
+        ])->assertDatabaseCount(File::class, $filesCount);
     }
 }

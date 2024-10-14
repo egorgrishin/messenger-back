@@ -6,6 +6,7 @@ namespace App\Services\Message\Requests;
 use App\Core\Parents\Request;
 use App\Services\Chat\Models\Chat;
 use App\Services\Message\Dto\CreateMessageDto;
+use Illuminate\Validation\Rule;
 
 final class CreateMessageRequest extends Request
 {
@@ -18,8 +19,13 @@ final class CreateMessageRequest extends Request
     {
         $chatClass = Chat::class;
         return [
-            'chatId' => "required|integer|exists:$chatClass,id",
-            'text'   => 'required|string',
+            'chatId'      => "required|integer|exists:$chatClass,id",
+            'text'        => [
+                Rule::requiredIf(fn (): bool => !$this->input('fileUuids')),
+                'string',
+            ],
+            'fileUuids'   => 'nullable|array',
+            'fileUuids.*' => 'string',
         ];
     }
 

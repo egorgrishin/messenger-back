@@ -8,16 +8,18 @@ use App\Services\Message\Requests\CreateMessageRequest;
 
 final readonly class CreateMessageDto extends Dto
 {
-    public int $chatId;
-    public int $userId;
-    public string $text;
+    public int     $chatId;
+    public int     $userId;
+    public ?string $text;
+    public array   $fileUuids;
 
     public static function fromRequest(CreateMessageRequest $request): self
     {
         $dto = new self();
-        $dto->chatId = $request->input('chatId');
+        $dto->chatId = $request->validated('chatId');
         $dto->userId = $request->user()->getAuthIdentifier();
-        $dto->text = $request->input('text');
+        $dto->text = $request->validated('text');
+        $dto->fileUuids = $request->validated('fileUuids', []);
         return $dto;
     }
 }

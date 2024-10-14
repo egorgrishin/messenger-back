@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace App\Services\File\Data\Factories;
 
-use App\Services\Message\Models\Message;
+use App\Services\File\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 final class FileFactory extends Factory
 {
-    protected $model = Message::class;
+    protected $model = File::class;
 
     public function definition(): array
     {
         return [
-            //
+            'filename' => Str::random() . '.jpg',
         ];
     }
 }

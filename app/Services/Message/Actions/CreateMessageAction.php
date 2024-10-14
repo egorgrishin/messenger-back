@@ -5,6 +5,7 @@ namespace App\Services\Message\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
+use App\Services\File\Tasks\AttachFilesToMessageTask;
 use Illuminate\Support\Facades\Log;
 use App\Services\Chat\Events\ChatUpdated;
 use App\Services\Chat\Models\Chat;
@@ -27,6 +28,7 @@ final class CreateMessageAction extends Action
             $message = $this->createMessage($dto);
             NewMessage::dispatch($message->toArray());
             $this->sendChatUpdatedEvent($message);
+            $this->task(AttachFilesToMessageTask::class)->run($message->id, $dto->fileUuids);
             return $message->toArray();
         } catch (Throwable $exception) {
             Log::error($exception);
