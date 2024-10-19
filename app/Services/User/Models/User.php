@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $short_link
  * @property string|null $email
  * @property string|null $status
+ * @property bool $is_online
  * @property string|null $code_word
  * @property string|null $code_hint
  * @property string|null $avatar_filename
