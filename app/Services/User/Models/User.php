@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Throwable;
 
 /**
@@ -31,6 +32,9 @@ use Throwable;
  * @property string $password
  * @property DateTimeInterface $created_at
  * @property DateTimeInterface $updated_at
+ *
+ * @property string|null $avatar_url
+ * @property string|null $masked_email
  */
 final class User extends Model implements AuthenticatableContract
 {
@@ -42,6 +46,7 @@ final class User extends Model implements AuthenticatableContract
 
     protected $appends = [
         'avatar_url',
+        'masked_email',
     ];
 
     protected function casts(): array
@@ -67,6 +72,18 @@ final class User extends Model implements AuthenticatableContract
         $getter = function () {
             return $this->avatar_filename
                 ? $this->avatar_filename
+                : null;
+        };
+
+        return new Attribute(get: $getter);
+    }
+
+    /** @noinspection PhpUnused */
+    protected function maskedEmail(): Attribute
+    {
+        $getter = function () {
+            return $this->email
+                ? Str::mask($this->email, '*', 3, strripos($this->email, '@') - 3)
                 : null;
         };
 

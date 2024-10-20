@@ -11,3 +11,5 @@ Route::put('/users/{userId}', [UserController::class, 'update']);
 
 Route::put('/users/{userId}/avatar', [UserAvatarController::class, 'update']);
 Route::delete('/users/{userId}/avatar', [UserAvatarController::class, 'delete']);
+
+Route::get('/users/{userId}/reset-methods', [UserController::class, 'getPasswordResetMethods']);
