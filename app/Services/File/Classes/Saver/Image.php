@@ -6,11 +6,10 @@ namespace App\Services\File\Classes\Saver;
 use App\Services\File\Dto\CreateFileDto;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Imagick;
 use ImagickException;
 
-class Image implements SaverHandler
+class Image extends SaverHandler
 {
     private string       $filename;
     private string       $path;
@@ -44,18 +43,6 @@ class Image implements SaverHandler
         $imagick->writeImage("$this->fullpath/$this->filename");
 
         return $this->filename;
-    }
-
-    /**
-     * Возвращает название файла с путем к нему
-     */
-    private function getFilename(int $userId): string
-    {
-        do {
-            $filename = $userId . '_' . Str::ulid()->toBase32() . '.jpg';
-            $path = "/$userId/images/$filename";
-        } while (Storage::disk('files')->exists($path));
-        return $filename;
     }
 
     /**
