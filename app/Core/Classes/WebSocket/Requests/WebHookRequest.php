@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Core\Classes\Soketi\Requests;
+namespace App\Core\Classes\WebSocket\Requests;
 
-use App\Core\Parents\BaseRequest;
+use App\Core\Parents\Request;
 
-class WebHookRequest extends BaseRequest
+class WebHookRequest extends Request
 {
     public function authorize(): bool
     {
