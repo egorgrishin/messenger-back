@@ -18,7 +18,7 @@ final readonly class GetChatMessagesDto extends Dto
 
         $dto = new self();
         $dto->chatId = (int) $request->route('chatId');
-        $dto->userId = $request->user()->getAuthIdentifier();
+        $dto->userId = $request->userId();
         $dto->startId = $startId ? (int) $startId : null;
         return $dto;
     }

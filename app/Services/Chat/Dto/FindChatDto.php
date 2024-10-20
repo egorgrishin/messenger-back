@@ -15,7 +15,7 @@ final readonly class FindChatDto extends Dto
     {
         $dto = new self();
         $dto->chatId = (int) $request->route('chatId');
-        $dto->userId = (int) $request->user()->getAuthIdentifier();
+        $dto->userId = $request->userId();
         return $dto;
     }
 }

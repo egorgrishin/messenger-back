@@ -27,7 +27,7 @@ final class CreateChatRequest extends Request
             'users'    => [
                 Rule::requiredIf(fn (): bool => $this->input('isDialog')),
                 'array',
-                new ValueInArray($this->user()->getAuthIdentifier()),
+                new ValueInArray($this->userId()),
             ],
             'users.*'  => 'required|distinct|integer',
         ];

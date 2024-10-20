@@ -9,6 +9,6 @@ final class DeleteUserAvatarRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()?->getAuthIdentifier() === (int) $this->route('userId');
+        return $this->userId() === $this->routeUserId();
     }
 }

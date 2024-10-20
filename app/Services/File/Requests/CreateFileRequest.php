@@ -10,7 +10,7 @@ class CreateFileRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()?->getAuthIdentifier() === (int) $this->input('userId');
+        return $this->userId() === (int) $this->input('userId');
     }
 
     public function rules(): array

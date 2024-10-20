@@ -4,14 +4,13 @@ declare(strict_types=1);
 namespace App\Services\Chat\Requests;
 
 use App\Core\Parents\Request;
-use Illuminate\Support\Facades\Log;
 use App\Services\Chat\Dto\GetUserChatsDto;
 
 final class GetUserChatsRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()?->getAuthIdentifier() == $this->route('userId');
+        return $this->userId() === $this->routeUserId();
     }
 
     public function rules(): array

@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace App\Services\User\Requests;
 
 use App\Core\Parents\Request;
-use App\Services\User\Dto\UpdateUserAvatarDto;
 
 final class UpdateUserAvatarRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()?->getAuthIdentifier() === (int) $this->route('userId');
+        return $this->userId() === $this->routeUserId();
     }
 
     public function rules(): array

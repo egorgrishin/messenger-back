@@ -17,7 +17,7 @@ final readonly class CreateMessageDto extends Dto
     {
         $dto = new self();
         $dto->chatId = $request->validated('chatId');
-        $dto->userId = $request->user()->getAuthIdentifier();
+        $dto->userId = $request->userId();
         $dto->text = $request->validated('text');
         $dto->fileUuids = $request->validated('fileUuids', []);
         return $dto;

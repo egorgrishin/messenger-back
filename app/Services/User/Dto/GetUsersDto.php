@@ -17,7 +17,7 @@ final readonly class GetUsersDto extends Dto
         $startId = $request->validated('startId');
 
         $dto = new self();
-        $dto->user_id = $request->user()?->getAuthIdentifier();
+        $dto->user_id = $request->userId();
         $dto->nick = $request->validated('nick');
         $dto->startId = $startId ? (int) $startId : null;
         return $dto;
