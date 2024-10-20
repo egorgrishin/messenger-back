@@ -6,6 +6,7 @@ namespace App\Services\User\Models;
 use App\Core\Parents\Model;
 use App\Services\Chat\Models\Chat;
 use App\Services\User\Data\Factories\UserFactory;
+use App\Services\User\Dto\CreateUserDto;
 use DateTimeInterface;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 /**
  * @property int $id
@@ -72,6 +74,26 @@ final class User extends Model implements AuthenticatableContract
     }
 
     /**
+     * Добавляет нового пользователя в базу данных и возвращает модель.
+     * @throws Throwable
+     */
+    public static function create(CreateUserDto $dto): self
+    {
+        $user = new self();
+        $user->login = $dto->login;
+        $user->nick = $dto->nick;
+        $user->short_link = $dto->shortLink;
+        $user->email = $dto->email;
+        $user->code_word = $dto->codeWord;
+        $user->code_hint = $dto->codeHint;
+        $user->password = $dto->password;
+        $user->saveAvatar($dto->avatar);
+        $user->saveOrFail();
+
+        return $user;
+    }
+
+    /**
      * Сохраняет файл аватара в хранилище и записывает путь к нему
      */
     public function saveAvatar(?UploadedFile $avatar): void
@@ -82,12 +104,5 @@ final class User extends Model implements AuthenticatableContract
 
         $filename = Storage::disk('userAvatars')->putFile($avatar);
         $this->avatar_filename = $filename ?: null;
-    }
-
-    public function deleteAvatar(): void
-    {
-        if ($this->avatar_filename) {
-            Storage::disk('userAvatars')->delete($this->avatar_filename);
-        }
     }
 }

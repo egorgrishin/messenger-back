@@ -22,7 +22,7 @@ final class CreateUserAction extends Action
         $this->validate($dto);
 
         try {
-            return $this->createUser($dto);
+            return User::create($dto);
         } catch (Throwable $exception) {
             Log::error($exception);
             throw new HttpException(500);
@@ -67,25 +67,5 @@ final class CreateUserAction extends Action
                 $query->orWhere('email', $dto->email);
             })
             ->get();
-    }
-
-    /**
-     * Создает нового пользователя
-     * @throws Throwable
-     */
-    private function createUser(CreateUserDto $dto): User
-    {
-        $user = new User();
-        $user->login = $dto->login;
-        $user->nick = $dto->nick;
-        $user->short_link = $dto->shortLink;
-        $user->email = $dto->email;
-        $user->code_word = $dto->codeWord;
-        $user->code_hint = $dto->codeHint;
-        $user->password = $dto->password;
-        $user->saveAvatar($dto->avatar);
-        $user->saveOrFail();
-
-        return $user;
     }
 }
