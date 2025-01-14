@@ -35,6 +35,8 @@ use Throwable;
  *
  * @property string|null $avatar_url
  * @property string|null $masked_email
+ *
+ * @extends HasFactory<UserFactory>
  */
 final class User extends Model implements AuthenticatableContract
 {

@@ -5,21 +5,32 @@ namespace App\Services\File\Classes\Saver;
 
 use App\Services\File\Dto\CreateFileDto;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class Document extends SaverHandler
 {
-    private string       $filename;
-    private string       $path;
-    private string       $fullpath;
-    private UploadedFile $file;
+    protected string $targetExtension = '';
+    protected const TYPE = 'docs';
 
     public function __construct(CreateFileDto $dto)
     {
-        $this->filename = $this->getFilename($dto->userId);
-        $this->path = "$dto->userId/documents";
-        $this->fullpath = Storage::disk('files')->path($this->path);
-        $this->file = $dto->file;
+        $this->setTargetExtension($dto->file);
+        parent::__construct($dto);
+    }
+
+    /**
+     * Возвращает расширение, с которым необходимо сохранить файл
+     */
+    protected function getTargetExtension(): string
+    {
+        return $this->targetExtension;
+    }
+
+    /**
+     * Устанавливает расширение, с которым необходимо сохранить файл
+     */
+    private function setTargetExtension(UploadedFile $file): void
+    {
+        $this->targetExtension = $file->getClientOriginalExtension();
     }
 
     /**
@@ -27,11 +38,7 @@ class Document extends SaverHandler
      */
     public function save(): string
     {
-        if (!Storage::disk('files')->exists($this->path)) {
-            Storage::disk('files')->makeDirectory($this->path);
-        }
-
-        $this->file->storeAs($this->fullpath);
-        return $this->filename;
+        $this->file->storeAs($this->path, $this->fileName, ['disk' => 'files']);
+        return $this->fileName;
     }
 }

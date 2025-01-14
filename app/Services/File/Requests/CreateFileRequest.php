@@ -17,7 +17,7 @@ class CreateFileRequest extends Request
     {
         return [
             'userId' => 'required|integer',
-            'file'   => 'required|file|mimes:bmp,gif,jpg,png,webp',
+            'file'   => 'required|file',
         ];
     }
 
