@@ -14,14 +14,12 @@ abstract class SaverHandler
     protected string       $fullPath;
     protected string       $fileName;
     protected UploadedFile $file;
-    protected string       $fileExtension;
-    protected const TYPE = 'undefined';
+    public const TYPE = 'undefined';
 
     public function __construct(CreateFileDto $dto)
     {
         $this->file = $dto->file;
         $this->fileName = $this->getFilename($dto->userId);
-        $this->fileExtension = $this->file->getClientOriginalExtension();
 
         $this->path = $dto->userId . '/' . static::TYPE;
         $this->fullPath = Storage::disk('files')->path($this->path);

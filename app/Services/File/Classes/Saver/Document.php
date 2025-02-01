@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 class Document extends SaverHandler
 {
     protected string $targetExtension = '';
-    protected const TYPE = 'docs';
+    public const TYPE = 'docs';
 
     public function __construct(CreateFileDto $dto)
     {

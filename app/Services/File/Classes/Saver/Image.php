@@ -9,7 +9,7 @@ use ImagickException;
 
 class Image extends SaverHandler
 {
-    protected const TYPE = 'images';
+    public const TYPE = 'images';
 
     /**
      * Возвращает расширение, с которым необходимо сохранить файл
