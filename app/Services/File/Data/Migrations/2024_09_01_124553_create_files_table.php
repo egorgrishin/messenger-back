@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('filename');
             $table->foreignId('message_id')->nullable()->constrained('users');
+            $table->tinyInteger('type')->unsigned()->index();
         });
     }
 

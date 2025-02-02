@@ -5,6 +5,7 @@ namespace App\Services\File\Classes\Saver;
 
 use App\Services\File\Dto\CreateFileDto;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -14,7 +15,8 @@ abstract class SaverHandler
     protected string       $fullPath;
     protected string       $fileName;
     protected UploadedFile $file;
-    public const TYPE = 'undefined';
+    public const TYPE          = 'undefined';
+    public const DATABASE_TYPE = 'document';
 
     public function __construct(CreateFileDto $dto)
     {
@@ -50,5 +52,13 @@ abstract class SaverHandler
             $path = sprintf('%d/%s/%s', $userId, static::TYPE, $filename);
         } while (Storage::disk('files')->exists($path));
         return $filename;
+    }
+
+    /**
+     * Возвращает тип файла для записи в базу данных
+     */
+    public function getDatabaseType(): int
+    {
+        return Config::get('files.types.' . static::DATABASE_TYPE, Document::DATABASE_TYPE);
     }
 }

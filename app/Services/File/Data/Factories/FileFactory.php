@@ -15,6 +15,7 @@ final class FileFactory extends Factory
     {
         return [
             'filename' => Str::random() . '.jpg',
+            'type'     => 3,
         ];
     }
 }

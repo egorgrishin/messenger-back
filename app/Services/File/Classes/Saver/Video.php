@@ -12,8 +12,9 @@ class Video extends SaverHandler
     protected string $previewFileName;
     protected string $previewPath;
     protected string $previewFullPath;
-    public const    TYPE         = 'videos';
-    public const    PREVIEW_TYPE = 'video_previews';
+    public const    TYPE          = 'videos';
+    public const    DATABASE_TYPE = 'video';
+    public const    PREVIEW_TYPE  = 'video_previews';
 
     public function __construct(CreateFileDto $dto)
     {

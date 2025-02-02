@@ -16,11 +16,12 @@ class FileResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var File $user */
+        /** @var File $file */
         $file = $this->resource;
 
         return [
             'uuid' => $file->uuid,
+            'type' => $file->type,
         ];
     }
 }

@@ -12,6 +12,7 @@ use App\Services\User\Models\User;
 use Generator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 final class CreateFileTest extends Test
 {
@@ -20,7 +21,7 @@ final class CreateFileTest extends Test
     /**
      * @dataProvider dataProviderTestCreateFile
      */
-    public function testCreateFile(UploadedFile $file, string $dir): void
+    public function testCreateFile(UploadedFile $file, string $type): void
     {
         Storage::fake('files');
         $user = User::factory()->create();
@@ -37,14 +38,18 @@ final class CreateFileTest extends Test
             ->assertJsonStructure([
                 'data' => [
                     'uuid',
+                    'type',
                 ],
-            ]);
+            ])
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.type', $this->getFileDatabaseType($type))
+            );
 
         $fileName = $this->getFilename();
-        $path = sprintf('%s/%s/%s', $user->id, $dir, $fileName);
+        $path = sprintf('%s/%s/%s', $user->id, $type, $fileName);
         Storage::disk('files')->assertExists($path);
 
-        if ($dir === Video::TYPE) {
+        if ($type === Video::TYPE) {
             $path = sprintf('%s/%s/%s.%s', $user->id, Video::PREVIEW_TYPE, $fileName, Video::getTargetPreviewExtension());
             Storage::disk('files')->assertExists($path);
         }
@@ -86,5 +91,14 @@ final class CreateFileTest extends Test
         self::$prevFileName = $file->filename;
 
         return $file->filename;
+    }
+
+    private function getFileDatabaseType(string $type): int
+    {
+        return match ($type) {
+            Image::TYPE => 1,
+            Video::TYPE => 2,
+            default     => 3,
+        };
     }
 }
