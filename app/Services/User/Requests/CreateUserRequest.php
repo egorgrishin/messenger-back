@@ -11,13 +11,10 @@ final class CreateUserRequest extends Request
     public function rules(): array
     {
         return [
-            'login'     => 'required|string|min:3|max:32',
             'nick'      => 'required|string|min:3|max:32',
+            'email'     => 'required|max:255|email|unique:users',
             'password'  => 'required|confirmed|string',
             'shortLink' => 'nullable|string|min:3|max:32',
-            'email'     => 'required_without:codeWord|email|max:255',
-            'codeWord'  => 'required_without:email|string|max:255',
-            'codeHint'  => 'nullable|string|max:255',
             'avatar'    => 'nullable|image',
         ];
     }

@@ -16,7 +16,7 @@ final class GetUsersRequest extends Request
     public function rules(): array
     {
         return [
-            'nick'    => "required|min:1|max:32",
+            'nick'    => 'required|min:1|max:32',
             'startId' => 'nullable|integer',
         ];
     }

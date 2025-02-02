@@ -40,39 +40,31 @@ class UpdateUserAction extends Action
     private function validate(UpdateUserDto $dto): void
     {
         $users = $this->getUsersForValidate($dto);
-        if ($users->where('nick', $dto->nick)->isNotEmpty()) {
-            throw new HttpException(422, 'Имя аккаунта уже используется');
-        }
-        if ($dto->email && $users->where('email', $dto->email)->isNotEmpty()) {
+        if ($users->where('email', $dto->email)->isNotEmpty()) {
             throw new HttpException(422, 'Адрес электронной почты уже используется');
         }
         if ($dto->shortLink && $users->where('short_link', $dto->shortLink)->isNotEmpty()) {
             throw new HttpException(422, 'Короткая ссылка уже используется');
         }
-        if (!$dto->email && !$dto->codeWord) {
-            throw new HttpException(422, 'Должен быть указан адрес электронной почты или кодовое слово');
-        }
     }
 
     /**
-     * Возвращает пользователей, у которых совпадает nick, email или short_link
-     * с указанными пользователем
+     * Возвращает пользователей, у которых совпадает email или short_link с введенными
      */
     private function getUsersForValidate(UpdateUserDto $dto): Collection
     {
         return User::query()
             ->select([
-                'nick',
                 'email',
                 'short_link',
             ])
             ->where('id', '<>', $dto->id)
-            ->where('nick', $dto->nick)
-            ->when($dto->email, function (Builder $query) use ($dto) {
-                $query->orWhere('email', $dto->email);
-            })
-            ->when($dto->shortLink, function (Builder $query) use ($dto) {
-                $query->orWhere('short_link', $dto->shortLink);
+            ->where(function (Builder $query) use ($dto) {
+                $query
+                    ->where('email', $dto->email)
+                    ->when($dto->shortLink, function (Builder $query) use ($dto) {
+                        $query->orWhere('short_link', $dto->shortLink);
+                    });
             })
             ->get();
     }
@@ -88,8 +80,6 @@ class UpdateUserAction extends Action
         $user->status = $dto->status;
         $user->short_link = $dto->shortLink;
         $user->email = $dto->email;
-        $user->code_word = $dto->codeWord;
-        $user->code_hint = $dto->codeHint;
         $user->saveOrFail();
     }
 

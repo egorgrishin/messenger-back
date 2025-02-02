@@ -8,9 +8,9 @@ use App\Services\User\Requests\GetUsersRequest;
 
 final readonly class GetUsersDto extends Dto
 {
-    public int $user_id;
+    public int    $user_id;
     public string $nick;
-    public ?int $startId;
+    public ?int   $startId;
 
     public static function fromRequest(GetUsersRequest $request): self
     {

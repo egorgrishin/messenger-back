@@ -17,7 +17,6 @@ final class CreateUserTest extends Test
         Storage::fake('userAvatars');
         $this
             ->postJson('/api/v1/users', [
-                'login'                 => $login = Str::random(),
                 'nick'                  => $nick = Str::random(),
                 'email'                 => $email = Str::random() . '@test.dev',
                 'password'              => $pass = Str::random(),
@@ -39,7 +38,6 @@ final class CreateUserTest extends Test
             );
 
         $this->assertDatabaseHas(User::class, [
-            'login' => $login,
             'nick'  => $nick,
             'email' => $email,
         ]);
@@ -50,10 +48,8 @@ final class CreateUserTest extends Test
     {
         $this
             ->postJson('/api/v1/users', [
-                'login'                 => $login = Str::random(),
                 'nick'                  => $nick = Str::random(),
-                'codeWord'              => Str::random(),
-                'codeHint'              => Str::random(),
+                'email'                 => $email = Str::random() . '@test.dev',
                 'password'              => $pass = Str::random(),
                 'password_confirmation' => $pass,
             ])
@@ -72,8 +68,8 @@ final class CreateUserTest extends Test
             );
 
         $this->assertDatabaseHas(User::class, [
-            'login' => $login,
             'nick'  => $nick,
+            'email' => $email,
         ]);
     }
 }

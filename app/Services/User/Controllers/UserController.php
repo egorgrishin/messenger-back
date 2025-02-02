@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Services\User\Controllers;
 
 use App\Core\Parents\Controller;
-use App\Services\User\Actions\GetPasswordResetMethodsAction;
 use App\Services\User\Actions\UpdateUserAction;
-use App\Services\User\Requests\GetPasswordResetMethodsRequest;
 use App\Services\User\Requests\UpdateUserRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\User\Actions\CreateUserAction;
@@ -58,21 +56,5 @@ final class UserController extends Controller
         return $this
             ->resource($user, UserResource::class)
             ->response();
-    }
-
-    /**
-     * Возвращает способы, которыми пользователь может восстановить пароль от аккаунта.
-     * Если доступно восстановление по электронному письму, то также вернется и адрес электронной почту, закрытый звездочками.
-     * Если доступно восстановление по кодовому слову, то также вернется подсказка к нему.
-     */
-    public function getPasswordResetMethods(GetPasswordResetMethodsRequest $request): JsonResponse
-    {
-        $methods = $this->action(GetPasswordResetMethodsAction::class)->run(
-            $request->routeUserId()
-        );
-
-        return response()->json([
-            'data' => $methods,
-        ]);
     }
 }

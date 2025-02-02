@@ -21,6 +21,11 @@ class UserAvatarController extends Controller
         return response()->json([], 204);
     }
 
+    /**
+     * @param DeleteUserAvatarRequest $request
+     * @return JsonResponse
+     * @noinspection PhpUnusedParameterInspection
+     */
     public function delete(DeleteUserAvatarRequest $request): JsonResponse
     {
         $this->action(DeleteUserAvatarAction::class)->run();

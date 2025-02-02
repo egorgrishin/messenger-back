@@ -20,14 +20,11 @@ use Throwable;
 
 /**
  * @property int $id
- * @property string $login
  * @property string $nick
+ * @property string $email
  * @property string|null $short_link
- * @property string|null $email
  * @property string|null $status
  * @property bool $is_online
- * @property string|null $code_word
- * @property string|null $code_hint
  * @property string|null $avatar_filename
  * @property string $password
  * @property DateTimeInterface $created_at
@@ -99,13 +96,10 @@ final class User extends Model implements AuthenticatableContract
     public static function create(CreateUserDto $dto): self
     {
         $user = new self();
-        $user->login = $dto->login;
+        $user->email = $dto->email;
+        $user->password = $dto->password;
         $user->nick = $dto->nick;
         $user->short_link = $dto->shortLink;
-        $user->email = $dto->email;
-        $user->code_word = $dto->codeWord;
-        $user->code_hint = $dto->codeHint;
-        $user->password = $dto->password;
         $user->saveAvatar($dto->avatar);
         $user->saveOrFail();
 
