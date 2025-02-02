@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Services\Auth\Requests;
 
 use App\Core\Parents\Request;
-use App\Services\Auth\Dto\LoginDto;
+use App\Services\Auth\Dto\AccessDto;
 
-final class LoginRequest extends Request
+final class AccessRequest extends Request
 {
     public function authorize(): bool
     {
@@ -16,13 +16,13 @@ final class LoginRequest extends Request
     public function rules(): array
     {
         return [
-            'nick'     => 'required|string',
+            'email'    => 'required|string|email|max:255',
             'password' => 'required|string',
         ];
     }
 
-    public function toDto(): LoginDto
+    public function toDto(): AccessDto
     {
-        return LoginDto::fromRequest($this);
+        return AccessDto::fromRequest($this);
     }
 }

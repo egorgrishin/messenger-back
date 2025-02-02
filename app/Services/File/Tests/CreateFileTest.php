@@ -18,7 +18,7 @@ final class CreateFileTest extends Test
     private static ?string $prevFileName = null;
 
     /**
-     * @dataProvider data
+     * @dataProvider dataProviderTestCreateFile
      */
     public function testCreateFile(UploadedFile $file, string $dir): void
     {
@@ -50,7 +50,7 @@ final class CreateFileTest extends Test
         }
     }
 
-    public static function data(): Generator
+    public static function dataProviderTestCreateFile(): Generator
     {
         yield from [
             [UploadedFile::fake()->image('image.png'), Image::TYPE],
@@ -83,6 +83,7 @@ final class CreateFileTest extends Test
 
         assert($file !== null, 'Файл не найден в базе данных');
         assert($file->filename !== self::$prevFileName, 'Имя файла не должно совпадать с именем предыдущего файла');
+        self::$prevFileName = $file->filename;
 
         return $file->filename;
     }

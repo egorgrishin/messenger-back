@@ -14,11 +14,10 @@ final class RefreshTest extends Test
     {
         /** @var User $user */
         $user = User::factory()->create([
-            'nick'     => $nick = Str::random(),
             'password' => $password = Str::password(),
         ]);
         // Получаем токен
-        $refreshToken = $this->getRefreshToken($nick, $password);
+        $refreshToken = $this->getRefreshToken($user->email, $password);
 
         $this->assertDatabaseHas(RefreshToken::class, [
             'ulid'       => $refreshToken,
@@ -58,10 +57,10 @@ final class RefreshTest extends Test
         ])->assertDatabaseCount(RefreshToken::class, 2);
     }
 
-    private function getRefreshToken(string $nick, string $password): string
+    private function getRefreshToken(string $email, string $password): string
     {
-        return $this->postJson('/api/v1/login', [
-            'nick'     => $nick,
+        return $this->postJson('/api/v1/access', [
+            'email'    => $email,
             'password' => $password,
         ])->json('refreshToken');
     }

@@ -4,19 +4,19 @@ declare(strict_types=1);
 namespace App\Services\Auth\Dto;
 
 use App\Core\Parents\Dto;
-use App\Services\Auth\Requests\LoginRequest;
+use App\Services\Auth\Requests\AccessRequest;
 
-final readonly class LoginDto extends Dto
+final readonly class AccessDto extends Dto
 {
-    public string $nick;
+    public string $email;
     public string $password;
     public ?string $ipAddress;
     public ?string $userAgent;
 
-    public static function fromRequest(LoginRequest $request): self
+    public static function fromRequest(AccessRequest $request): self
     {
         $dto = new self();
-        $dto->nick = $request->validated('nick');
+        $dto->email = $request->validated('email');
         $dto->password = $request->validated('password');
         $dto->ipAddress = $request->ip();
         $dto->userAgent = $request->userAgent();

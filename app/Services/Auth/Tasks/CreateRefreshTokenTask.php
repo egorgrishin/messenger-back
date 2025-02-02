@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Services\Auth\Tasks;
 
 use App\Core\Parents\Task;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Services\Auth\Dto\CreateRefreshTokenDto;
 use App\Services\Auth\Models\RefreshToken;
