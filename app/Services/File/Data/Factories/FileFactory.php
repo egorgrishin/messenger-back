@@ -14,8 +14,9 @@ final class FileFactory extends Factory
     public function definition(): array
     {
         return [
-            'filename' => Str::random() . '.jpg',
-            'type'     => 3,
+            'filename'   => Str::random() . '.jpg',
+            'type'       => 3,
+            'created_at' => now(),
         ];
     }
 }

@@ -7,20 +7,23 @@ use App\Core\Parents\Model;
 use App\Services\File\Classes\Saver\Saver;
 use App\Services\File\Data\Factories\FileFactory;
 use App\Services\File\Dto\CreateFileDto;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Throwable;
 
 /**
- * @property int $uuid
+ * @property string $uuid
  * @property int $user_id
  * @property string $filename
+ * @property int|null $message_id
  * @property int $type
+ * @property DateTimeInterface $created_at
  */
 final class File extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public const UPDATED_AT = null;
 
     protected static function newFactory(): FileFactory
     {

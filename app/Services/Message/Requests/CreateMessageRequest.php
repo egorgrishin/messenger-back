@@ -22,6 +22,7 @@ final class CreateMessageRequest extends Request
             'chatId'      => "required|integer|exists:$chatClass,id",
             'text'        => [
                 Rule::requiredIf(fn (): bool => !$this->input('fileUuids')),
+                'nullable',
                 'string',
             ],
             'fileUuids'   => 'nullable|array',
