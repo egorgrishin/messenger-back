@@ -19,13 +19,15 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'nick'     => 'egor',
             'password' => 'egor',
+            'email'    => 'egor@grishin.in'
         ]);
 
         $users = [];
         for ($i = 0; $i < 999; $i++) {
             $users[] = [
-                'nick' => $faker->userName(),
-                'password' => 'password',
+                'nick'       => $faker->userName(),
+                'email'      => $faker->email(),
+                'password'   => 'password',
                 'created_at' => $now,
                 'updated_at' => $now,
             ];

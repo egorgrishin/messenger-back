@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Services\Message\Resources;
 
 use App\Core\Parents\JsonResource;
+use App\Services\File\Resources\FileResource;
 use Illuminate\Http\Request;
 
 class MessageResource extends JsonResource
@@ -21,6 +22,7 @@ class MessageResource extends JsonResource
             'chatId'    => $message['chat_id'],
             'userId'    => $message['user_id'],
             'text'      => $message['text'],
+            'files'     => FileResource::collection($this->whenLoaded('files')),
             'createdAt' => $message['created_at'],
         ];
     }

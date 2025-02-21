@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use App\Services\Chat\Tasks\UserInChatTask;
 use App\Services\Message\Dto\GetChatMessagesDto;
 use App\Services\Message\Models\Message;
+use Illuminate\Support\Collection;
 
 final class GetChatMessagesAction extends Action
 {
@@ -20,7 +21,7 @@ final class GetChatMessagesAction extends Action
     /**
      * Возвращает список сообщений чата
      */
-    public function run(GetChatMessagesDto $dto): array
+    public function run(GetChatMessagesDto $dto): Collection
     {
         if (!$this->task(UserInChatTask::class)->run($dto->chatId, $dto->userId)) {
             throw new HttpException(403, 'Вы не состоите в чате');
@@ -41,9 +42,9 @@ final class GetChatMessagesAction extends Action
                     $query->where('id', '<', $dto->startId);
                 },
             )
+            ->with('files')
             ->orderByDesc('id')
             ->limit(self::LIMIT)
-            ->get()
-            ->toArray();
+            ->get();
     }
 }
