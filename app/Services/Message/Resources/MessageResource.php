@@ -18,12 +18,13 @@ class MessageResource extends JsonResource
     {
         $message = $this->resource;
         return [
-            'id'        => $message['id'],
-            'chatId'    => $message['chat_id'],
-            'userId'    => $message['user_id'],
-            'text'      => $message['text'],
-            'files'     => FileResource::collection($this->whenLoaded('files')),
-            'createdAt' => $message['created_at'],
+            'id'         => $message['id'],
+            'chatId'     => $message['chat_id'],
+            'userId'     => $message['user_id'],
+            'text'       => $message['text'],
+            'files'      => FileResource::collection($this->whenLoaded('files')),
+            'filesCount' => $this->whenCounted('files'),
+            'createdAt'  => $message['created_at'],
         ];
     }
 }
