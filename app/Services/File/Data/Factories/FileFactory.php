@@ -14,9 +14,11 @@ final class FileFactory extends Factory
     public function definition(): array
     {
         return [
-            'filename'   => Str::random() . '.jpg',
-            'type'       => 3,
-            'created_at' => now(),
+            'uuid'            => Str::uuid()->toString(),
+            'filename'        => Str::random() . '.jpg',
+            'client_filename' => Str::random() . '.jpg',
+            'type'            => 3,
+            'created_at'      => now(),
         ];
     }
 }

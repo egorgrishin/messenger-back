@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid()->primary();
             $table->foreignId('user_id')->constrained('users');
             $table->string('filename');
+            $table->string('client_filename');
             $table->foreignId('message_id')->nullable()->constrained('messages');
             $table->tinyInteger('type')->unsigned()->index();
             $table->timestamp('created_at');

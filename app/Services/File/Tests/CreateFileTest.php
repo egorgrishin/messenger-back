@@ -12,6 +12,7 @@ use App\Services\User\Models\User;
 use Generator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 
 final class CreateFileTest extends Test
@@ -29,6 +30,7 @@ final class CreateFileTest extends Test
 
         $this
             ->postJson('/api/v1/files', [
+                'uuid'   => Str::uuid()->toString(),
                 'userId' => $user->id,
                 'file'   => $file,
             ], [

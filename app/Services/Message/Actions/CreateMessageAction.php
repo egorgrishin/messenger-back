@@ -18,7 +18,7 @@ use Throwable;
 
 final class CreateMessageAction extends Action
 {
-    public function run(CreateMessageDto $dto): array
+    public function run(CreateMessageDto $dto): Message
     {
         if (!$this->task(UserInChatTask::class)->run($dto->chatId, $dto->userId)) {
             throw new HttpException(403, 'Вы не состоите в чате');
@@ -29,7 +29,7 @@ final class CreateMessageAction extends Action
             NewMessage::dispatch($message->toArray());
             $this->sendChatUpdatedEvent($message);
             $this->task(AttachFilesToMessageTask::class)->run($message->id, $dto->fileUuids);
-            return $message->toArray();
+            return $message->load('files');
         } catch (Throwable $exception) {
             Log::error($exception);
             throw new HttpException(500);

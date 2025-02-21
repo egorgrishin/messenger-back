@@ -20,8 +20,11 @@ class FileResource extends JsonResource
         $file = $this->resource;
 
         return [
-            'uuid' => $file->uuid,
-            'type' => $file->type,
+            'uuid'            => $file->uuid,
+            'type'            => $file->type,
+            'url'             => $file->url,
+            'videoPreviewUrl' => $file->video_preview_url,
+            'filename'        => $file->client_filename,
         ];
     }
 }

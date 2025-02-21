@@ -11,6 +11,8 @@ class FileObserver extends Observer
 {
     public function creating(File $file): void
     {
-        $file->uuid = Str::uuid()->toString();
+        if (!$file->uuid) {
+            $file->uuid = Str::uuid()->toString();
+        }
     }
 }

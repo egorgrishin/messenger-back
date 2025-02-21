@@ -16,6 +16,7 @@ class CreateFileRequest extends Request
     public function rules(): array
     {
         return [
+            'uuid'   => 'required|string|uuid',
             'userId' => 'required|integer',
             'file'   => 'required|file',
         ];

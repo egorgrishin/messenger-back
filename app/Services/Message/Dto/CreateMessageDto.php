@@ -19,7 +19,7 @@ final readonly class CreateMessageDto extends Dto
         $dto->chatId = $request->validated('chatId');
         $dto->userId = $request->userId();
         $dto->text = $request->validated('text');
-        $dto->fileUuids = $request->validated('fileUuids', []);
+        $dto->fileUuids = $request->validated('fileUuids', []) ?: [];
         return $dto;
     }
 }
