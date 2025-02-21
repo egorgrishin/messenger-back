@@ -43,7 +43,7 @@ final class GetUserChatsAction extends Action
             })
             ->with([
                 'users:users.id,nick',
-                'lastMessage',
+                'lastMessage.files:message_id',
             ])
             ->orderByDesc('last_message_id')
             ->limit(self::LIMIT)
