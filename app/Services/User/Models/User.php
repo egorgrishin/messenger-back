@@ -23,7 +23,6 @@ use Throwable;
  * @property string $nick
  * @property string $email
  * @property string|null $short_link
- * @property string|null $status
  * @property bool $is_online
  * @property string|null $avatar_filename
  * @property string $password

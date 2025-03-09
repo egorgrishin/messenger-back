@@ -17,7 +17,6 @@ final class UpdateUserTest extends Test
         $this
             ->putJson("/api/v1/users/$user->id", [
                 'nick'      => $nick = Str::random(24),
-                'status'    => $status = Str::random(250),
                 'email'     => $email = Str::random() . '@test.dev',
                 'shortLink' => $shortLink = Str::random(),
             ], [
@@ -39,7 +38,6 @@ final class UpdateUserTest extends Test
 
         $this->assertDatabaseHas(User::class, [
             'nick'       => $nick,
-            'status'     => $status,
             'email'      => $email,
             'short_link' => $shortLink,
         ]);

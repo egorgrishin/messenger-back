@@ -77,7 +77,6 @@ class UpdateUserAction extends Action
     private function updateUser(User $user, UpdateUserDto $dto): void
     {
         $user->nick = $dto->nick;
-        $user->status = $dto->status;
         $user->short_link = $dto->shortLink;
         $user->email = $dto->email;
         $user->saveOrFail();

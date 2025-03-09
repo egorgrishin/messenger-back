@@ -17,7 +17,6 @@ final class UpdateUserRequest extends Request
     {
         return [
             'nick'      => 'required|string|min:3|max:32',
-            'status'    => 'nullable|string|max:500',
             'shortLink' => 'nullable|string|min:3|max:32',
             'email'     => 'required|email|max:255',
         ];
