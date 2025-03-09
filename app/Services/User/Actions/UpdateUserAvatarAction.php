@@ -5,7 +5,6 @@ namespace App\Services\User\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
-use App\Services\User\Exceptions\SaveAvatarException;
 use App\Services\User\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +24,6 @@ final class UpdateUserAvatarAction extends Action
             $user->saveAvatar($avatar);
             $newFilename = $user->avatar_filename;
             $user->save();
-        } catch (SaveAvatarException $exception) {
-            Log::error($exception);
-            throw new HttpException(500);
         } catch (Throwable $exception) {
             Log::error($exception);
             if (!empty($newFilename)) {
