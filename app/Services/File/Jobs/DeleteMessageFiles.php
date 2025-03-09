@@ -18,7 +18,7 @@ class DeleteMessageFiles implements ShouldQueue
     {
         File::query()
             ->where('message_id', $this->messageId)
-            ->select()
-            ->delete()
+            ->get()
+            ->each(fn (File $file) => $file->delete());
     }
 }

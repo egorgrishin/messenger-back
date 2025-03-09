@@ -30,6 +30,10 @@ final class File extends Model
 {
     use HasFactory;
 
+    public const TYPE_IMAGE = 1;
+    public const TYPE_VIDEO = 2;
+    public const TYPE_DOCUMENT = 3;
+
     public const UPDATED_AT = null;
 
     protected $appends = [
@@ -61,7 +65,7 @@ final class File extends Model
     protected function videoPreviewUrl(): Attribute
     {
         $getter = function () {
-            if (!$this->filename || $this->type !== 2) {
+            if (!$this->filename || $this->type !== self::TYPE_VIDEO) {
                 return null;
             }
 
