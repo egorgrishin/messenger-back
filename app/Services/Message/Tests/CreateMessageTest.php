@@ -7,7 +7,7 @@ use App\Core\Parents\Test;
 use App\Services\Chat\Events\ChatUpdated;
 use App\Services\Chat\Models\Chat;
 use App\Services\File\Models\File;
-use App\Services\Message\Events\NewMessage;
+use App\Services\Message\Events\CreatedMessage;
 use App\Services\Message\Models\Message;
 use App\Services\User\Models\User;
 use Illuminate\Support\Facades\Event;
@@ -49,7 +49,7 @@ final class CreateMessageTest extends Test
             ])
             ->assertCreated();
 
-        Event::assertDispatched(NewMessage::class);
+        Event::assertDispatched(CreatedMessage::class);
         Event::assertDispatchedTimes(ChatUpdated::class, 2);
         $this
             ->assertDatabaseHas(Message::class, [

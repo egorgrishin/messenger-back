@@ -7,30 +7,32 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
-use App\Services\Message\Resources\MessageResource;
 
-final class NewMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
+final class DeletedMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
 {
     use Dispatchable;
 
     public function __construct(
-        private readonly array $message,
+        private readonly int $messageId,
+        private readonly int $chatId,
     ) {}
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('chats.' . $this->message['chat_id']);
+        return new PrivateChannel('chats.' . $this->chatId);
     }
 
     /** @noinspection PhpUnused */
     public function broadcastWith(): array
     {
-        return (new MessageResource($this->message))->resolve();
+        return [
+            'messageId' => $this->messageId,
+        ];
     }
 
     /** @noinspection PhpUnused */
     public function broadcastAs(): string
     {
-        return 'message.new';
+        return 'message.deleted';
     }
 }

@@ -11,7 +11,7 @@ use App\Services\Chat\Events\ChatUpdated;
 use App\Services\Chat\Models\Chat;
 use App\Services\Chat\Tasks\UserInChatTask;
 use App\Services\Message\Dto\CreateMessageDto;
-use App\Services\Message\Events\NewMessage;
+use App\Services\Message\Events\CreatedMessage;
 use App\Services\Message\Models\Message;
 use App\Services\User\Models\User;
 use Throwable;
@@ -26,7 +26,7 @@ final class CreateMessageAction extends Action
 
         try {
             $message = $this->createMessage($dto);
-            NewMessage::dispatch($message->toArray());
+            CreatedMessage::dispatch($message->toArray());
             $this->sendChatUpdatedEvent($message);
             $this->task(AttachFilesToMessageTask::class)->run($message->id, $dto->fileUuids);
             return $message->load('files');
