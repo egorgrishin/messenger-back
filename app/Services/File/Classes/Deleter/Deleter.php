@@ -9,40 +9,27 @@ use Illuminate\Support\Facades\Storage;
 
 final readonly class Deleter
 {
-    private int    $userId;
-    private int    $type;
-    private string $dir;
-    private string $filename;
-
-    public function __construct(File $fileModel)
-    {
-        $this->userId = $fileModel->user_id;
-        $this->type = $fileModel->type;
-        $this->dir = File::typeToString($fileModel->type);
-        $this->filename = $fileModel->filename;
-    }
-
     /**
      * Удаляет файл с диска
      */
-    public function run(): void
+    public static function run(int $userId, int $type, string $filename): void
     {
-        $path = sprintf('%d/%s/%s', $this->userId, $this->dir, $this->filename);
+        $path = sprintf('%d/%s/%s', $userId, File::typeToString($type), $filename);
         Storage::disk('files')->delete($path);
 
-        if ($this->type === File::TYPE_VIDEO) {
-            $this->deleteVideoPreview();
+        if ($type === File::TYPE_VIDEO) {
+            self::deleteVideoPreview($userId, $filename);
         }
     }
 
     /**
      * Удаляет превью видеозаписи с диска
      */
-    private function deleteVideoPreview(): void
+    private static function deleteVideoPreview(int $userId, string $filename): void
     {
         $path = sprintf(
             '%d/%s/%s.%s',
-            $this->userId, Video::PREVIEW_TYPE, $this->filename, Video::getTargetPreviewExtension()
+            $userId, Video::PREVIEW_TYPE, $filename, Video::getTargetPreviewExtension()
         );
         Storage::disk('files')->delete($path);
     }

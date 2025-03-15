@@ -59,7 +59,7 @@ final class Chat extends Model
     {
         $this->users()->attach($users);
         foreach ($users as $userId) {
-            ChatUpdated::dispatch($this, $userId);
+            ChatUpdated::dispatch($userId, $this);
         }
         return $this;
     }

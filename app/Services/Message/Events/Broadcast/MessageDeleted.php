@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\Message\Events;
+namespace App\Services\Message\Events\Broadcast;
 
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 
-final class DeletedMessage implements ShouldBroadcast, ShouldDispatchAfterCommit
+final class MessageDeleted implements ShouldBroadcast, ShouldDispatchAfterCommit
 {
     use Dispatchable;
 

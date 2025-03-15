@@ -38,7 +38,7 @@ final class File extends Model
 
     protected $appends = [
         'url',
-        'videoPreviewUrl',
+        'video_preview_url',
     ];
 
     protected static function newFactory(): FileFactory

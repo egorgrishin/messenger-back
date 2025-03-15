@@ -20,7 +20,7 @@ class UserResource extends JsonResource
         $user = $this->resource;
         return [
             'id'        => $user->id,
-            'nick'      => $user->nick,
+            'nick'      => $this->whenHas('nick'),
             'avatarUrl' => $this->whenAppended('avatar_url'),
         ];
     }

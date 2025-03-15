@@ -5,8 +5,8 @@ namespace App\Services\Message\Controllers;
 
 use App\Core\Parents\Controller;
 use App\Services\Message\Actions\DeleteMessageAction;
-use App\Services\Message\Dto\DeleteMessageDto;
-use App\Services\Message\Requests\DeleteMessageRequest;
+use App\Services\Message\Actions\UpdateMessageAction;
+use App\Services\Message\Requests\UpdateMessageRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\Message\Actions\CreateMessageAction;
 use App\Services\Message\Actions\GetChatMessagesAction;
@@ -35,18 +35,25 @@ final class MessageController extends Controller
     /**
      * Обновляет сообщение
      */
-    public function update(CreateMessageRequest $request)
+    public function update(UpdateMessageRequest $request): JsonResponse
     {
-        //
+        $message = $this->action(UpdateMessageAction::class)->run(
+            $request->toDto()
+        );
+
+        return $this
+            ->resource($message, MessageResource::class)
+            ->response()
+            ->setStatusCode(204);
     }
 
     /**
      * Удаляет сообщение
      */
-    public function delete(DeleteMessageRequest $request)
+    public function delete(Request $request)
     {
         $this->action(DeleteMessageAction::class)->run(
-            $request->toDto()
+            (int) $request->route('messageId')
         );
 
         return response()->json([], 204);
