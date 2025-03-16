@@ -36,7 +36,7 @@ final class ChatController extends Controller
     public function find(FindChatRequest $request): JsonResponse
     {
         $chat = $this->action(FindChatAction::class)->run(
-            $request->toDto()
+            (int) $request->route('chatId'),
         );
 
         return $this
