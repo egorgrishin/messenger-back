@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 127)->nullable();
-            $table->boolean('is_dialog')->default(1);
-            $table->foreignId('last_message_id')->nullable();
+            $table->foreignId('last_message_id')
+                ->nullable()
+                ->references('id')
+                ->on('messages');
         });
     }
 

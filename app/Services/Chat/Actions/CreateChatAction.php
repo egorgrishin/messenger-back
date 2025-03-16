@@ -5,7 +5,9 @@ namespace App\Services\Chat\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
+use App\Services\Chat\Events\ChatUpdated;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Services\Chat\Dto\CreateChatDto;
@@ -15,16 +17,17 @@ use Throwable;
 final class CreateChatAction extends Action
 {
     /**
-     * Создает новый чат и добавляет в него пользователей, если они указаны
+     * Создает новый чат и добавляет в него пользователей
      */
     public function run(CreateChatDto $dto): Chat
     {
         $this->validate($dto);
 
         try {
-            /** @var Chat */
             return DB::transaction(function () use ($dto) {
-                return $this->createChat($dto)->attachUsers($dto->users ?? []);
+                $chat = new Chat();
+                $chat->save();
+                return $this->attachUsers($chat, $dto->users);
             });
         } catch (Throwable $exception) {
             Log::error($exception);
@@ -37,7 +40,10 @@ final class CreateChatAction extends Action
      */
     private function validate(CreateChatDto $dto): void
     {
-        if ($dto->isDialog && $this->isDialogExists($dto)) {
+        if (!in_array(Auth::id(), $dto->users)) {
+            throw new HttpException(422, 'Вы должны присутствовать в списке пользователей');
+        }
+        if ($this->isDialogExists($dto)) {
             throw new HttpException(422, 'Диалог уже существует');
         }
     }
@@ -48,7 +54,6 @@ final class CreateChatAction extends Action
     private function isDialogExists(CreateChatDto $dto): bool
     {
         return Chat::query()
-            ->where('is_dialog', 1)
             ->whereHas('users', function (Builder $query) use ($dto) {
                 $query->whereIn('users.id', $dto->users);
             }, '=', count($dto->users))
@@ -56,15 +61,14 @@ final class CreateChatAction extends Action
     }
 
     /**
-     * Добавляет чат в базу данных
-     * @throws Throwable
+     * Прикрепляет пользователей к чату
      */
-    private function createChat(CreateChatDto $dto): Chat
+    public function attachUsers(Chat $chat, array $users): Chat
     {
-        $chat = new Chat();
-        $chat->title = $dto->title;
-        $chat->is_dialog = $dto->isDialog;
-        $chat->saveOrFail();
+        $chat->users()->attach($users);
+        foreach ($users as $userId) {
+            ChatUpdated::dispatch($userId, $chat);
+        }
         return $chat;
     }
 }

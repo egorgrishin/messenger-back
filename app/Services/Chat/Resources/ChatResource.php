@@ -20,8 +20,6 @@ final class ChatResource extends JsonResource
         $chat = $this->resource;
         return [
             'id'            => $chat->id,
-            'title'         => $chat->title,
-            'isDialog'      => $chat->is_dialog,
             'lastMessageId' => $this->whenHas('last_message_id'),
             'users'         => UserResource::collection($this->whenLoaded('users')),
             'lastMessage'   => new MessageResource($this->whenLoaded('lastMessage')),

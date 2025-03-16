@@ -20,7 +20,7 @@ class ChatUpdated implements ShouldBroadcast, ShouldDispatchAfterCommit
         private readonly Chat $chat,
     ) {
         if (!$this->chat->relationLoaded('users')) {
-            $chat->load('users:id');
+            $chat->load('users:id,nick');
         }
     }
 
@@ -32,7 +32,7 @@ class ChatUpdated implements ShouldBroadcast, ShouldDispatchAfterCommit
     /** @noinspection PhpUnused */
     public function broadcastWith(): array
     {
-        return (new ChatResource($this->chat->toArray()))->resolve();
+        return (new ChatResource($this->chat))->resolve();
     }
 
     /** @noinspection PhpUnused */

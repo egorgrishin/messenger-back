@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace App\Services\Chat\Actions;
 
 use App\Core\Parents\Action;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
 use App\Services\Chat\Dto\GetUserChatsDto;
 use App\Services\Chat\Models\Chat;
 use Illuminate\Support\Collection;
@@ -26,21 +25,16 @@ final class GetUserChatsAction extends Action
         return Chat::query()
             ->select([
                 'chats.id',
-                'title',
-                'is_dialog',
                 'last_message_id',
             ])
             ->when(
                 $dto->startMessageId !== null,
-                function (EloquentBuilder $query) use ($dto) {
+                function (Builder $query) use ($dto) {
                     $query->where('last_message_id', '<', $dto->startMessageId);
                 },
             )
-            ->whereExists(function (Builder $query) use ($dto) {
-                $query->selectRaw(1)
-                    ->from('chat_user')
-                    ->whereColumn('chats.id', 'chat_user.chat_id')
-                    ->where('user_id', $dto->userId);
+            ->whereHas('users', function (Builder $query) use ($dto) {
+                $query->where('users.id', $dto->userId);
             })
             ->with([
                 'users:users.id,nick',

@@ -34,8 +34,6 @@ final class GetUserChatsTest extends Test
                 'data' => [
                     '*' => [
                         'id',
-                        'title',
-                        'isDialog',
                         'lastMessageId',
                         'lastMessage',
                     ],

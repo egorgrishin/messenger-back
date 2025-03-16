@@ -22,18 +22,13 @@ final class CreateChatTest extends Test
 
         $this
             ->postJson('/api/v1/chats', [
-                'isDialog' => true,
-                'users'    => [1, 2],
+                'users' => [1, 2],
             ], [
                 'Authorization' => "Bearer $token",
             ])
             ->assertCreated()
             ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'title',
-                    'isDialog',
-                ],
+                'data' => ['id'],
             ]);
         Event::assertDispatched(ChatUpdated::class, 2);
 
@@ -42,8 +37,7 @@ final class CreateChatTest extends Test
 
         $this
             ->postJson('/api/v1/chats', [
-                'isDialog' => true,
-                'users'    => [1, 2],
+                'users' => [1, 2],
             ], [
                 'Authorization' => "Bearer $token",
             ])

@@ -13,9 +13,6 @@ final class ChatFactory extends Factory
 
     public function definition(): array
     {
-        return [
-            'is_dialog' => $isDialog = (bool) rand(0, 1),
-            'title'     => $isDialog ? null : Str::random(),
-        ];
+        return [];
     }
 }

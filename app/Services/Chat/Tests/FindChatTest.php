@@ -16,7 +16,7 @@ final class FindChatTest extends Test
         /** @var User $user2 */
         $user2 = User::factory()->create();
         /** @var Chat $chat */
-        $chat = Chat::factory()->create(['is_dialog' => true]);
+        $chat = Chat::factory()->create();
         $chat->users()->attach($user1->id);
 
         $token1 = $this->jwt->createToken($user1);
@@ -39,8 +39,6 @@ final class FindChatTest extends Test
             ->assertJsonStructure([
                 'data' => [
                     'id',
-                    'title',
-                    'isDialog',
                     'users' => [
                         '*' => [
                             'id',
