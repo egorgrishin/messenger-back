@@ -2,9 +2,7 @@
 
 namespace App\Core\Providers;
 
-use App\Core\Classes\WebSocket\Handler;
 use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class BroadcastServiceProvider extends ServiceProvider
@@ -15,6 +13,5 @@ class BroadcastServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Broadcast::routes(['middleware' => ['api']]);
-        Route::post('/broadcasting/webhook', Handler::class)->middleware('api');
     }
 }
