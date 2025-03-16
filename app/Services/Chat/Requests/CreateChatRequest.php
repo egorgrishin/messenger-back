@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Services\Chat\Requests;
 
 use App\Core\Parents\Request;
-use App\Services\Chat\Dto\CreateChatDto;
 
 final class CreateChatRequest extends Request
 {
@@ -16,13 +15,7 @@ final class CreateChatRequest extends Request
     public function rules(): array
     {
         return [
-            'users'   => 'required|array|size:2',
-            'users.*' => 'required|distinct|integer',
+            'interlocutorId' => 'required|integer',
         ];
-    }
-
-    public function toDto(): CreateChatDto
-    {
-        return CreateChatDto::fromRequest($this);
     }
 }

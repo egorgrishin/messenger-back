@@ -21,7 +21,7 @@ final class ChatController extends Controller
     public function create(CreateChatRequest $request): JsonResponse
     {
         $chat = $this->action(CreateChatAction::class)->run(
-            $request->toDto()
+            $request->input('interlocutorId'),
         );
 
         return $this

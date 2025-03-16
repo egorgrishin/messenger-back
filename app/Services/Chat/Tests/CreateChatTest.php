@@ -22,7 +22,7 @@ final class CreateChatTest extends Test
 
         $this
             ->postJson('/api/v1/chats', [
-                'users' => [1, 2],
+                'interlocutorId' => 2,
             ], [
                 'Authorization' => "Bearer $token",
             ])
@@ -37,7 +37,7 @@ final class CreateChatTest extends Test
 
         $this
             ->postJson('/api/v1/chats', [
-                'users' => [1, 2],
+                'interlocutorId' => 2,
             ], [
                 'Authorization' => "Bearer $token",
             ])

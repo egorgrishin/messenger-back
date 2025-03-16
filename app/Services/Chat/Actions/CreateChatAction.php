@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Services\Chat\Dto\CreateChatDto;
 use App\Services\Chat\Models\Chat;
 use Throwable;
 
@@ -19,15 +18,15 @@ final class CreateChatAction extends Action
     /**
      * Создает новый чат и добавляет в него пользователей
      */
-    public function run(CreateChatDto $dto): Chat
+    public function run(int $interlocutorId): Chat
     {
-        $this->validate($dto);
+        $this->validate($interlocutorId);
 
         try {
-            return DB::transaction(function () use ($dto) {
+            return DB::transaction(function () use ($interlocutorId) {
                 $chat = new Chat();
                 $chat->save();
-                return $this->attachUsers($chat, $dto->users);
+                return $this->attachUsers($chat, [Auth::id(), $interlocutorId]);
             });
         } catch (Throwable $exception) {
             Log::error($exception);
@@ -38,12 +37,9 @@ final class CreateChatAction extends Action
     /**
      * Проверяет данные перед созданием чата
      */
-    private function validate(CreateChatDto $dto): void
+    private function validate(int $interlocutorId): void
     {
-        if (!in_array(Auth::id(), $dto->users)) {
-            throw new HttpException(422, 'Вы должны присутствовать в списке пользователей');
-        }
-        if ($this->isDialogExists($dto)) {
+        if ($this->isDialogExists($interlocutorId)) {
             throw new HttpException(422, 'Диалог уже существует');
         }
     }
@@ -51,12 +47,12 @@ final class CreateChatAction extends Action
     /**
      * Проверяет, что диалог между пользователями существует
      */
-    private function isDialogExists(CreateChatDto $dto): bool
+    private function isDialogExists(int $interlocutorId): bool
     {
         return Chat::query()
-            ->whereHas('users', function (Builder $query) use ($dto) {
-                $query->whereIn('users.id', $dto->users);
-            }, '=', count($dto->users))
+            ->whereHas('users', function (Builder $query) use ($interlocutorId) {
+                $query->whereIn('users.id', [Auth::id(), $interlocutorId]);
+            }, '=', 2)
             ->exists();
     }
 
