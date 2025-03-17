@@ -15,7 +15,7 @@ final class CreateChatRequest extends Request
     public function rules(): array
     {
         return [
-            'interlocutorId' => 'required|integer',
+            'recipientId' => 'required|integer',
         ];
     }
 }

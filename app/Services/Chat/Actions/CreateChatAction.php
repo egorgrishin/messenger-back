@@ -18,15 +18,15 @@ final class CreateChatAction extends Action
     /**
      * Создает новый чат и добавляет в него пользователей
      */
-    public function run(int $interlocutorId): Chat
+    public function run(int $recipientId): Chat
     {
-        $this->validate($interlocutorId);
+        $this->validate($recipientId);
 
         try {
-            return DB::transaction(function () use ($interlocutorId) {
+            return DB::transaction(function () use ($recipientId) {
                 $chat = new Chat();
                 $chat->save();
-                return $this->attachUsers($chat, [Auth::id(), $interlocutorId]);
+                return $this->attachUsers($chat, [Auth::id(), $recipientId]);
             });
         } catch (Throwable $exception) {
             Log::error($exception);
@@ -37,9 +37,9 @@ final class CreateChatAction extends Action
     /**
      * Проверяет данные перед созданием чата
      */
-    private function validate(int $interlocutorId): void
+    private function validate(int $recipientId): void
     {
-        if ($this->isDialogExists($interlocutorId)) {
+        if ($this->isDialogExists($recipientId)) {
             throw new HttpException(422, 'Диалог уже существует');
         }
     }
@@ -47,11 +47,11 @@ final class CreateChatAction extends Action
     /**
      * Проверяет, что диалог между пользователями существует
      */
-    private function isDialogExists(int $interlocutorId): bool
+    private function isDialogExists(int $recipientId): bool
     {
         return Chat::query()
-            ->whereHas('users', function (Builder $query) use ($interlocutorId) {
-                $query->whereIn('users.id', [Auth::id(), $interlocutorId]);
+            ->whereHas('users', function (Builder $query) use ($recipientId) {
+                $query->whereIn('users.id', [Auth::id(), $recipientId]);
             }, '=', 2)
             ->exists();
     }
