@@ -4,6 +4,8 @@ namespace App\Services\Message\Actions;
 
 use App\Core\Exceptions\HttpException;
 use App\Core\Parents\Action;
+use App\Services\Chat\Models\Chat;
+use App\Services\Message\Models\Message;
 use App\Services\Message\Tasks\FindMessageTask;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -19,7 +21,7 @@ final class DeleteMessageAction extends Action
         $message->canUpdate();
 
         try {
-            $message->delete();
+            $message->deleteOrFail();
         } catch (Throwable $exception) {
             Log::error($exception);
             throw new HttpException(500, 'Не получилось удалить сообщение');

@@ -11,3 +11,6 @@ Route::put('/users/{userId}', [UserController::class, 'update']);
 
 Route::put('/users/{userId}/avatar', [UserAvatarController::class, 'update']);
 Route::delete('/users/{userId}/avatar', [UserAvatarController::class, 'delete']);
+
+Route::post('/users/verify', [UserController::class, 'sendVerificationCode']);
+Route::post('/users/reset', [UserController::class, 'resetPassword']);

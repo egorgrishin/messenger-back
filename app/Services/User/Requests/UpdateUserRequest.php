@@ -16,9 +16,7 @@ final class UpdateUserRequest extends Request
     public function rules(): array
     {
         return [
-            'nick'      => 'required|string|min:3|max:32',
-            'shortLink' => 'nullable|string|min:3|max:32',
-            'email'     => 'required|email|max:255',
+            'nick' => 'required|string|min:3|max:32',
         ];
     }
 

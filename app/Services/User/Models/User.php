@@ -22,7 +22,6 @@ use Throwable;
  * @property int $id
  * @property string $nick
  * @property string $email
- * @property string|null $short_link
  * @property bool $is_online
  * @property string|null $avatar_filename
  * @property string $password
@@ -69,7 +68,7 @@ final class User extends Model implements AuthenticatableContract
     {
         $getter = function () {
             return $this->avatar_filename
-                ? $this->avatar_filename
+                ? Storage::disk('userAvatars')->url($this->avatar_filename)
                 : null;
         };
 
@@ -98,8 +97,6 @@ final class User extends Model implements AuthenticatableContract
         $user->email = $dto->email;
         $user->password = $dto->password;
         $user->nick = $dto->nick;
-        $user->short_link = $dto->shortLink;
-        $user->saveAvatar($dto->avatar);
         $user->saveOrFail();
 
         return $user;
@@ -116,5 +113,13 @@ final class User extends Model implements AuthenticatableContract
 
         $filename = Storage::disk('userAvatars')->putFile($avatar);
         $this->avatar_filename = $filename ?: null;
+    }
+
+    /**
+     * Возвращает ключ Redis, под которым лежит код для подтверждения адреса электронной почты
+     */
+    public static function getRedisVerifyCodeKey(string $email): string
+    {
+        return "verify-code.$email";
     }
 }

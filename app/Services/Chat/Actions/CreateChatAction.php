@@ -17,16 +17,20 @@ final class CreateChatAction extends Action
 {
     /**
      * Создает новый чат и добавляет в него пользователей
+     * @return array{string, string}
      */
-    public function run(int $recipientId): Chat
+    public function run(int $recipientId): array
     {
-        $this->validate($recipientId);
+        $chat = $this->getChat($recipientId);
+        if ($chat) {
+            return [false, $chat];
+        }
 
         try {
             return DB::transaction(function () use ($recipientId) {
                 $chat = new Chat();
                 $chat->save();
-                return $this->attachUsers($chat, [Auth::id(), $recipientId]);
+                return [true, $this->attachUsers($chat, [Auth::id(), $recipientId])];
             });
         } catch (Throwable $exception) {
             Log::error($exception);
@@ -35,25 +39,16 @@ final class CreateChatAction extends Action
     }
 
     /**
-     * Проверяет данные перед созданием чата
+     * Возвращает диалог, в котором состоят пользователи
      */
-    private function validate(int $recipientId): void
+    private function getChat(int $recipientId): ?Chat
     {
-        if ($this->isDialogExists($recipientId)) {
-            throw new HttpException(422, 'Диалог уже существует');
-        }
-    }
-
-    /**
-     * Проверяет, что диалог между пользователями существует
-     */
-    private function isDialogExists(int $recipientId): bool
-    {
+        /** @var ?Chat */
         return Chat::query()
             ->whereHas('users', function (Builder $query) use ($recipientId) {
                 $query->whereIn('users.id', [Auth::id(), $recipientId]);
             }, '=', 2)
-            ->exists();
+            ->first();
     }
 
     /**

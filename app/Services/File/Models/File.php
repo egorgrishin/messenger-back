@@ -36,6 +36,12 @@ final class File extends Model
 
     public const UPDATED_AT = null;
 
+    protected $primaryKey = 'uuid';
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
     protected $appends = [
         'url',
         'video_preview_url',

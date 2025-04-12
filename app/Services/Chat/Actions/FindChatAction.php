@@ -23,7 +23,7 @@ final class FindChatAction extends Action
         /** @var Chat */
         return Chat::query()
             ->select('chats.id')
-            ->with('users:users.id,nick')
+            ->with('users:users.id,nick,avatar_filename')
             ->find($chatId);
     }
 }

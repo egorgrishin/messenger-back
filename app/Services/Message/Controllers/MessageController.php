@@ -44,7 +44,7 @@ final class MessageController extends Controller
         return $this
             ->resource($message, MessageResource::class)
             ->response()
-            ->setStatusCode(204);
+            ->setStatusCode(200);
     }
 
     /**

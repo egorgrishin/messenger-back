@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chats', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('last_message_id')->nullable();
+        Schema::table('chats', function (Blueprint $table) {
+            $table->foreign('last_message_id')->references('id')->on('messages');
         });
     }
 
@@ -22,6 +21,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chats');
+        Schema::table('chats', function (Blueprint $table) {
+            if (config('database.default') !== 'sqlite') {
+                $table->dropForeign('chats_last_message_id_foreign');
+            }
+        });
     }
 };

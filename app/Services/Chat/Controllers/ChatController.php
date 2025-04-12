@@ -20,14 +20,16 @@ final class ChatController extends Controller
      */
     public function create(CreateChatRequest $request): JsonResponse
     {
-        $chat = $this->action(CreateChatAction::class)->run(
+        [$isCreated, $chat] = $this->action(CreateChatAction::class)->run(
             $request->input('recipientId'),
         );
 
-        return $this
-            ->resource($chat, ChatResource::class)
-            ->response()
-            ->setStatusCode(201);
+        return response()->json([
+            'data' => [
+                'isCreated' => $isCreated,
+                'chat'      => (new ChatResource($chat))
+            ],
+        ], $isCreated ? 201 : 200);
     }
 
     /**

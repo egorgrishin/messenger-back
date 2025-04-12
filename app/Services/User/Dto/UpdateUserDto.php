@@ -10,16 +10,12 @@ final readonly class UpdateUserDto extends Dto
 {
     public int     $id;
     public string  $nick;
-    public ?string $shortLink;
-    public ?string $email;
 
     public static function fromRequest(UpdateUserRequest $request): static
     {
         $dto = new self();
         $dto->id = (int) $request->route('userId');
         $dto->nick = $request->validated('nick');
-        $dto->shortLink = $request->validated('shortLink');
-        $dto->email = $request->validated('email');
         return $dto;
     }
 }

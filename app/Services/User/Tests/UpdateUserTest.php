@@ -16,9 +16,7 @@ final class UpdateUserTest extends Test
         $token = $this->jwt->createToken($user);
         $this
             ->putJson("/api/v1/users/$user->id", [
-                'nick'      => $nick = Str::random(24),
-                'email'     => $email = Str::random() . '@test.dev',
-                'shortLink' => $shortLink = Str::random(),
+                'nick' => $nick = Str::random(24),
             ], [
                 'Authorization' => "Bearer $token",
             ])
@@ -33,13 +31,11 @@ final class UpdateUserTest extends Test
             ->assertJson(fn (AssertableJson $json) => $json
                 ->where('data.id', $user->id)
                 ->where('data.nick', $nick)
-                ->where('data.avatarUrl', null)
+                ->whereNot('data.avatarUrl', null)
             );
 
         $this->assertDatabaseHas(User::class, [
-            'nick'       => $nick,
-            'email'      => $email,
-            'short_link' => $shortLink,
+            'nick' => $nick,
         ]);
     }
 }

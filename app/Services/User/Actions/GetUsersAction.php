@@ -25,6 +25,7 @@ final class GetUsersAction extends Action
             ->select([
                 'id',
                 'nick',
+                'avatar_filename',
             ])
             ->where('id', '<>', $dto->user_id)
             ->where('nick', 'like', "%$dto->nick%")

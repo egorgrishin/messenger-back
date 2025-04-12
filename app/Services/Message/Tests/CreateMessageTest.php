@@ -54,7 +54,6 @@ final class CreateMessageTest extends Test
         $this
             ->assertDatabaseHas(Message::class, [
                 'chat_id' => $chat->id,
-                'text'    => $text,
                 'user_id' => $user->id,
             ])
             ->assertDatabaseCount(Message::class, 1)
@@ -79,7 +78,7 @@ final class CreateMessageTest extends Test
 
         $this->assertDatabaseHas(File::class, [
             'user_id'    => $user->id,
-            'message_id' => $response->json('data.id')
+            'message_id' => $response->json('data.id'),
         ])->assertDatabaseCount(File::class, $filesCount);
     }
 }

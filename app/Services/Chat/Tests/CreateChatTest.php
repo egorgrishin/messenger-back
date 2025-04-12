@@ -28,22 +28,23 @@ final class CreateChatTest extends Test
             ])
             ->assertCreated()
             ->assertJsonStructure([
-                'data' => ['id'],
+                'data' => [
+                    'isCreated',
+                    'chat'      => [
+                        'id',
+                        'users' => [
+                            '*' => [
+                                'id',
+                                'nick',
+                                'avatarUrl',
+                            ]
+                        ]
+                    ],
+                ],
             ]);
         Event::assertDispatched(ChatUpdated::class, 2);
 
         $this->assertDatabaseCount(Chat::class, 1)
             ->assertDatabaseCount('chat_user', 2);
-
-        $this
-            ->postJson('/api/v1/chats', [
-                'recipientId' => 2,
-            ], [
-                'Authorization' => "Bearer $token",
-            ])
-            ->assertUnprocessable()
-            ->assertJson([
-                'message' => 'Диалог уже существует',
-            ]);
     }
 }

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('nick', 32);
-            $table->string('short_link', 32)->nullable()->unique();
             $table->string('avatar_filename', 63)->nullable();
             $table->string('password');
             $table->timestamp('created_at')->nullable()->index();

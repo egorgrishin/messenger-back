@@ -37,7 +37,7 @@ final class GetUserChatsAction extends Action
                 $query->where('users.id', $dto->userId);
             })
             ->with([
-                'users:users.id,nick',
+                'users:users.id,nick,avatar_filename',
                 'lastMessage' => function (HasOne $query) {
                     $query->withCount('files');
                 },

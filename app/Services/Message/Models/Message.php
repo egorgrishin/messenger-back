@@ -30,6 +30,13 @@ final class Message extends Model
 
     public const UPDATED_AT = null;
 
+    protected function casts(): array
+    {
+        return [
+            'text' => 'encrypted',
+        ];
+    }
+
     protected static function newFactory(): MessageFactory
     {
         return MessageFactory::new();

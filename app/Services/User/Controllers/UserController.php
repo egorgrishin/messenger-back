@@ -4,8 +4,12 @@ declare(strict_types=1);
 namespace App\Services\User\Controllers;
 
 use App\Core\Parents\Controller;
+use App\Services\User\Actions\ResetPasswordAction;
+use App\Services\User\Actions\SendCodeAction;
 use App\Services\User\Actions\UpdateUserAction;
+use App\Services\User\Requests\ResetPasswordRequest;
 use App\Services\User\Requests\UpdateUserRequest;
+use App\Services\User\Requests\SendCodeRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\User\Actions\CreateUserAction;
 use App\Services\User\Actions\GetUsersAction;
@@ -56,5 +60,33 @@ final class UserController extends Controller
         return $this
             ->resource($user, UserResource::class)
             ->response();
+    }
+
+    /**
+     * Отправляет код подтверждения email на почту
+     */
+    public function sendVerificationCode(SendCodeRequest $request): JsonResponse
+    {
+        $retry = $this->action(SendCodeAction::class)->run(
+            $request->validated('email')
+        );
+
+        return response()->json([
+            'data' => [
+                'retry' => $retry
+            ],
+        ], 201);
+    }
+
+    /**
+     * Сбрасывает пароль от аккаунта пользователя
+     */
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $this->action(ResetPasswordAction::class)->run(
+            $request->toDto()
+        );
+
+        return response()->json();
     }
 }

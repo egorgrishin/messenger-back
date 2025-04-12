@@ -4,11 +4,10 @@ namespace App\Services\Message\Events;
 
 use App\Services\Message\Models\Message;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
-class MessageCreated
+final class MessageDeleted
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
 
     public function __construct(
         public readonly Message $message

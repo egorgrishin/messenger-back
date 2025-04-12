@@ -32,7 +32,7 @@ final class UpdateMessageAction extends Action
             return $this->updateMessage($message, $dto);
         } catch (Throwable $exception) {
             Log::error($exception);
-            throw new HttpException(500, 'Не получилось удалить сообщение');
+            throw new HttpException(500, 'Не получилось обновить сообщение');
         }
     }
 
@@ -86,12 +86,7 @@ final class UpdateMessageAction extends Action
      */
     private function deleteUnusedFiles(Collection $files, array $deletedFileUuids): void
     {
-        File::query()
-            ->whereIn('uuid', $deletedFileUuids)
-            ->delete();
-        $deletedFiles = $files
-            ->whereIn('uuid', $deletedFileUuids)
-            ->toArray();
+        $deletedFiles = $files->whereIn('uuid', $deletedFileUuids);
         DeleteFiles::dispatch($deletedFiles);
     }
 }

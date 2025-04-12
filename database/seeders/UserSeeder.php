@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Services\User\Data\Factories\UserFactory;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use App\Services\User\Models\User;
@@ -14,8 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create()->unique();
-        $now = now()->toDateTimeString();
         User::factory()->create([
             'nick'     => 'egor',
             'password' => 'egor',
@@ -24,13 +23,7 @@ class UserSeeder extends Seeder
 
         $users = [];
         for ($i = 0; $i < 999; $i++) {
-            $users[] = [
-                'nick'       => $faker->userName(),
-                'email'      => $faker->email(),
-                'password'   => 'password',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ];
+            $users[] = UserFactory::new()->definition();
             if (count($users) >= 100) {
                 $this->insert($users);
                 $users = [];
