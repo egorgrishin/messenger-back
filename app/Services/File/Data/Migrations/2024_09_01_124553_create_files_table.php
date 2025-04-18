@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('message_id')->nullable()->constrained('messages')->noActionOnDelete();
             $table->tinyInteger('type')->unsigned()->index();
             $table->timestamp('created_at');
+
+            $table->index(['message_id', 'created_at']);
         });
     }
 

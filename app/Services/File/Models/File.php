@@ -105,4 +105,14 @@ final class File extends Model
     {
         return Config::get('files.dirs', [])[$type] ?? Document::TYPE;
     }
+
+    public function getFullPath(): string
+    {
+        return sprintf('%s/%s/%s', $this->user_id, self::typeToString($this->type), $this->filename);
+    }
+
+    public function getPreviewFullPath(): string
+    {
+        return sprintf('%s/video_previews/%s.jpg', $this->user_id, $this->filename);
+    }
 }
