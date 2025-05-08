@@ -15,7 +15,6 @@ final class CreateChatTest extends Test
     {
         Event::fake();
 
-        /** @var User $user */
         $user = User::factory()->create();
         User::factory()->create();
         $token = $this->jwt->createToken($user);
@@ -30,19 +29,38 @@ final class CreateChatTest extends Test
             ->assertJsonStructure([
                 'data' => [
                     'isCreated',
-                    'chat'      => [
+                    'chat' => [
                         'id',
                         'users' => [
                             '*' => [
                                 'id',
                                 'nick',
                                 'avatarUrl',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                 ],
             ]);
         Event::assertDispatched(ChatUpdated::class, 2);
+
+        $this->assertDatabaseCount(Chat::class, 1)
+            ->assertDatabaseCount('chat_user', 2);
+
+        $this
+            ->postJson('/api/v1/chats', [
+                'recipientId' => 2,
+            ], [
+                'Authorization' => "Bearer $token",
+            ])
+            ->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    'isCreated',
+                    'chat' => [
+                        'id',
+                    ],
+                ],
+            ]);
 
         $this->assertDatabaseCount(Chat::class, 1)
             ->assertDatabaseCount('chat_user', 2);

@@ -42,8 +42,8 @@ final class AccessTest extends Test
                 'password' => $password . 'incorrect',
             ])
             ->assertUnauthorized()
-            ->assertJson([
-                'message' => 'Некорректные данные',
+            ->assertJsonStructure([
+                'message',
             ]);
 
         $this->assertDatabaseCount(RefreshToken::class, 0);

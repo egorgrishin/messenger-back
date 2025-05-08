@@ -12,7 +12,6 @@ final class RefreshTest extends Test
 {
     public function testRefresh(): void
     {
-        /** @var User $user */
         $user = User::factory()->create([
             'password' => $password = Str::password(),
         ]);

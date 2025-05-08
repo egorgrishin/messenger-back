@@ -14,14 +14,13 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class CreateFileTest extends Test
 {
     private static ?string $prevFileName = null;
 
-    /**
-     * @dataProvider dataProviderTestCreateFile
-     */
+    #[DataProvider('dataProviderTestCreateFile')]
     public function testCreateFile(UploadedFile $file, string $type): void
     {
         Storage::fake('files');
@@ -88,8 +87,8 @@ final class CreateFileTest extends Test
             ->latest()
             ->first();
 
-        assert($file !== null, 'Файл не найден в базе данных');
-        assert($file->filename !== self::$prevFileName, 'Имя файла не должно совпадать с именем предыдущего файла');
+        $this->assertTrue($file !== null, 'Файл не найден в базе данных');
+        $this->assertTrue($file->filename !== self::$prevFileName, 'Имя файла не должно совпадать с именем предыдущего файла');
         self::$prevFileName = $file->filename;
 
         return $file->filename;

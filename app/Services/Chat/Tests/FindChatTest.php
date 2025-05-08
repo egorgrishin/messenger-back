@@ -11,29 +11,18 @@ final class FindChatTest extends Test
 {
     public function testFindChat(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create();
-        /** @var User $user2 */
-        $user2 = User::factory()->create();
+        /** @var User $user */
+        $user = User::factory()->create();
         /** @var Chat $chat */
         $chat = Chat::factory()->create();
-        $chat->users()->attach($user1->id);
+        $chat->users()->attach($user->id);
 
-        $token1 = $this->jwt->createToken($user1);
-        $token2 = $this->jwt->createToken($user2);
-
-        // Получаем чат от пользователя, не состоящего в нем
-        $this
-            ->getJson("/api/v1/chats/$chat->id", [
-                'Authorization' => "Bearer $token2",
-            ])
-            ->assertForbidden();
-        $chat->users()->attach($user2->id);
+        $token = $this->jwt->createToken($user);
 
         // Получаем чат
         $this
             ->getJson("/api/v1/chats/$chat->id", [
-                'Authorization' => "Bearer $token1",
+                'Authorization' => "Bearer $token",
             ])
             ->assertOk()
             ->assertJsonStructure([
@@ -47,5 +36,25 @@ final class FindChatTest extends Test
                     ],
                 ],
             ]);
+    }
+
+    public function testFindForeignChat(): void
+    {
+        /** @var User $user1 */
+        $user1 = User::factory()->create();
+        /** @var User $user2 */
+        $user2 = User::factory()->create();
+        /** @var Chat $chat */
+        $chat = Chat::factory()->create();
+        $chat->users()->attach($user1->id);
+
+        $token2 = $this->jwt->createToken($user2);
+
+        // Получаем чат от пользователя, не состоящего в нем
+        $this
+            ->getJson("/api/v1/chats/$chat->id", [
+                'Authorization' => "Bearer $token2",
+            ])
+            ->assertForbidden();
     }
 }
