@@ -1,3 +1,6 @@
 *
 !public/
+!public/user_avatars/test
+!tests/
+!tests/chats
 !.gitignore
