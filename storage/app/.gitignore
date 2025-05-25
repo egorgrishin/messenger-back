@@ -1,5 +1,5 @@
 *
 #!public/
-!public/user_avatars/test
-!tests/chats
+!public/user_avatars/test/
+#!tests/avatars
 !.gitignore
